@@ -28,6 +28,10 @@ struct HomeView: View {
             
             // Main content
             VStack(spacing: 0) {
+                // Add space above the navigation bar
+                Spacer()
+                    .frame(height: 35)
+                
                 // Top navigation bar
                 HStack {
                     Image("brandLogo")

@@ -89,47 +89,7 @@ struct RewiringView: View {
     }
 }
 
-struct RecoveryTimelineCard: View {
-    let dayRange: String
-    let title: String
-    let description: String
-    let isCompleted: Bool
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Circle()
-                    .fill(isCompleted ? Color.green : Color.white.opacity(0.3))
-                    .frame(width: 20, height: 20)
-                
-                Text(dayRange)
-                    .font(.headline)
-                    .foregroundColor(isCompleted ? .green : .white)
-                
-                Spacer()
-                
-                if isCompleted {
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundColor(.green)
-                }
-            }
-            
-            Text(title)
-                .font(.title3)
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-            
-            Text(description)
-                .font(.body)
-                .foregroundColor(.white.opacity(0.8))
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .padding()
-        .background(Color.white.opacity(0.1))
-        .cornerRadius(15)
-        .padding(.horizontal)
-    }
-}
+
 
 // Preview provider for RewiringView
 struct RewiringView_Previews: PreviewProvider {

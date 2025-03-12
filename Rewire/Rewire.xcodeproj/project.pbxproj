@@ -6,6 +6,18 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		88307E242D81D30B00E35A35 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88307E1B2D81D30B00E35A35 /* ProgressBarView.swift */; };
+		88307E252D81D30B00E35A35 /* RewiringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88307E222D81D30B00E35A35 /* RewiringView.swift */; };
+		88307E262D81D30B00E35A35 /* ActionButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88307E192D81D30B00E35A35 /* ActionButtonView.swift */; };
+		88307E272D81D30B00E35A35 /* HourglassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88307E1A2D81D30B00E35A35 /* HourglassView.swift */; };
+		88307E282D81D30B00E35A35 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88307E1F2D81D30B00E35A35 /* ContentView.swift */; };
+		88307E292D81D30B00E35A35 /* RecoveryTimelineCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88307E1D2D81D30B00E35A35 /* RecoveryTimelineCard.swift */; };
+		88307E2A2D81D30B00E35A35 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88307E212D81D30B00E35A35 /* ProfileView.swift */; };
+		88307E2B2D81D30B00E35A35 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88307E202D81D30B00E35A35 /* HomeView.swift */; };
+		88307E2C2D81D30B00E35A35 /* ProgressMetricView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88307E1C2D81D30B00E35A35 /* ProgressMetricView.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		886D18BE2D811826005E8578 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,9 +36,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		886D18AC2D811824005E8578 /* Rewire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rewire.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		886D18BD2D811826005E8578 /* RewireTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RewireTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		886D18C72D811826005E8578 /* RewireUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RewireUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		88307DF82D81D25200E35A35 /* Rewire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rewire.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		88307DF92D81D25200E35A35 /* RewireTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RewireTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		88307DFA2D81D25200E35A35 /* RewireUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RewireUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		88307E192D81D30B00E35A35 /* ActionButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonView.swift; sourceTree = "<group>"; };
+		88307E1A2D81D30B00E35A35 /* HourglassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourglassView.swift; sourceTree = "<group>"; };
+		88307E1B2D81D30B00E35A35 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
+		88307E1C2D81D30B00E35A35 /* ProgressMetricView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressMetricView.swift; sourceTree = "<group>"; };
+		88307E1D2D81D30B00E35A35 /* RecoveryTimelineCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryTimelineCard.swift; sourceTree = "<group>"; };
+		88307E1F2D81D30B00E35A35 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		88307E202D81D30B00E35A35 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		88307E212D81D30B00E35A35 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		88307E222D81D30B00E35A35 /* RewiringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewiringView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -72,24 +93,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		88307E1E2D81D30B00E35A35 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				88307E192D81D30B00E35A35 /* ActionButtonView.swift */,
+				88307E1A2D81D30B00E35A35 /* HourglassView.swift */,
+				88307E1B2D81D30B00E35A35 /* ProgressBarView.swift */,
+				88307E1C2D81D30B00E35A35 /* ProgressMetricView.swift */,
+				88307E1D2D81D30B00E35A35 /* RecoveryTimelineCard.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		88307E232D81D30B00E35A35 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				88307E1F2D81D30B00E35A35 /* ContentView.swift */,
+				88307E202D81D30B00E35A35 /* HomeView.swift */,
+				88307E212D81D30B00E35A35 /* ProfileView.swift */,
+				88307E222D81D30B00E35A35 /* RewiringView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		886D18A32D811824005E8578 = {
 			isa = PBXGroup;
 			children = (
 				886D18AE2D811824005E8578 /* Rewire */,
 				886D18C02D811826005E8578 /* RewireTests */,
 				886D18CA2D811826005E8578 /* RewireUITests */,
-				886D18AD2D811824005E8578 /* Products */,
+				88307DF82D81D25200E35A35 /* Rewire.app */,
+				88307DF92D81D25200E35A35 /* RewireTests.xctest */,
+				88307DFA2D81D25200E35A35 /* RewireUITests.xctest */,
+				88307E1E2D81D30B00E35A35 /* Components */,
+				88307E232D81D30B00E35A35 /* Views */,
 			);
-			sourceTree = "<group>";
-		};
-		886D18AD2D811824005E8578 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				886D18AC2D811824005E8578 /* Rewire.app */,
-				886D18BD2D811826005E8578 /* RewireTests.xctest */,
-				886D18C72D811826005E8578 /* RewireUITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -114,7 +152,7 @@
 			packageProductDependencies = (
 			);
 			productName = Rewire;
-			productReference = 886D18AC2D811824005E8578 /* Rewire.app */;
+			productReference = 88307DF82D81D25200E35A35 /* Rewire.app */;
 			productType = "com.apple.product-type.application";
 		};
 		886D18BC2D811826005E8578 /* RewireTests */ = {
@@ -137,7 +175,7 @@
 			packageProductDependencies = (
 			);
 			productName = RewireTests;
-			productReference = 886D18BD2D811826005E8578 /* RewireTests.xctest */;
+			productReference = 88307DF92D81D25200E35A35 /* RewireTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		886D18C62D811826005E8578 /* RewireUITests */ = {
@@ -160,7 +198,7 @@
 			packageProductDependencies = (
 			);
 			productName = RewireUITests;
-			productReference = 886D18C72D811826005E8578 /* RewireUITests.xctest */;
+			productReference = 88307DFA2D81D25200E35A35 /* RewireUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -196,7 +234,7 @@
 			mainGroup = 886D18A32D811824005E8578;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 886D18AD2D811824005E8578 /* Products */;
+			productRefGroup = 886D18A32D811824005E8578;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -236,6 +274,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88307E242D81D30B00E35A35 /* ProgressBarView.swift in Sources */,
+				88307E252D81D30B00E35A35 /* RewiringView.swift in Sources */,
+				88307E262D81D30B00E35A35 /* ActionButtonView.swift in Sources */,
+				88307E272D81D30B00E35A35 /* HourglassView.swift in Sources */,
+				88307E282D81D30B00E35A35 /* ContentView.swift in Sources */,
+				88307E292D81D30B00E35A35 /* RecoveryTimelineCard.swift in Sources */,
+				88307E2A2D81D30B00E35A35 /* ProfileView.swift in Sources */,
+				88307E2B2D81D30B00E35A35 /* HomeView.swift in Sources */,
+				88307E2C2D81D30B00E35A35 /* ProgressMetricView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -103,9 +103,187 @@ struct HomeView: View {
     }
 }
 
+struct HourglassView: View {
+    let progress: CGFloat
+    
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                // Hourglass outline
+                Path { path in
+                    let width = geometry.size.width
+                    let height = geometry.size.height
+                    let midX = width / 2
+                    
+                    // Top triangle
+                    path.move(to: CGPoint(x: 0, y: 0))
+                    path.addLine(to: CGPoint(x: width, y: 0))
+                    path.addLine(to: CGPoint(x: midX, y: height / 2))
+                    path.addLine(to: CGPoint(x: 0, y: 0))
+                    
+                    // Bottom triangle
+                    path.move(to: CGPoint(x: 0, y: height))
+                    path.addLine(to: CGPoint(x: width, y: height))
+                    path.addLine(to: CGPoint(x: midX, y: height / 2))
+                    path.addLine(to: CGPoint(x: 0, y: height))
+                }
+                .stroke(Color.white.opacity(0.5), lineWidth: 2)
+                
+                // Filled portion (top)
+                Path { path in
+                    let width = geometry.size.width
+                    let height = geometry.size.height
+                    let midX = width / 2
+                    
+                    path.move(to: CGPoint(x: 0, y: 0))
+                    path.addLine(to: CGPoint(x: width, y: 0))
+                    path.addLine(to: CGPoint(x: midX, y: height / 2))
+                    path.addLine(to: CGPoint(x: 0, y: 0))
+                }
+                .fill(Color.white.opacity(0.2))
+                
+                // Filled portion (bottom - represents progress)
+                Path { path in
+                    let width = geometry.size.width
+                    let height = geometry.size.height
+                    let midX = width / 2
+                    
+                    // Calculate how much of the bottom triangle to fill based on progress
+                    let fillHeight = height / 2 * progress
+                    
+                    path.move(to: CGPoint(x: midX, y: height / 2))
+                    
+                    // Calculate points for the trapezoid
+                    let ratio = fillHeight / (height / 2)
+                    let leftX = midX - (midX * ratio)
+                    let rightX = midX + (midX * ratio)
+                    
+                    path.addLine(to: CGPoint(x: leftX, y: height / 2 + fillHeight))
+                    path.addLine(to: CGPoint(x: rightX, y: height / 2 + fillHeight))
+                    path.addLine(to: CGPoint(x: midX, y: height / 2))
+                }
+                .fill(Color.white)
+            }
+            .frame(width: min(geometry.size.width, 200))
+            .frame(maxWidth: .infinity)
+        }
+    }
+}
+
+struct ProgressMetricView: View {
+    let title: String
+    let value: String
+    
+    var body: some View {
+        VStack(spacing: 5) {
+            Text(title)
+                .font(.caption)
+                .foregroundColor(.white.opacity(0.7))
+            
+            Text(value)
+                .font(.title3)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+        }
+        .frame(minWidth: 120)
+        .padding(.vertical, 10)
+        .padding(.horizontal, 15)
+        .background(Color.white.opacity(0.1))
+        .cornerRadius(12)
+    }
+}
+
+struct ProgressBarView: View {
+    let progress: CGFloat
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 5) {
+            Text("\(Int(progress * 100))% Complete")
+                .font(.caption)
+                .foregroundColor(.white.opacity(0.7))
+            
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    // Background
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color.white.opacity(0.1))
+                        .frame(height: 10)
+                    
+                    // Progress
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color.white)
+                        .frame(width: geometry.size.width * progress, height: 10)
+                }
+            }
+            .frame(height: 10)
+        }
+    }
+}
+
+struct ActionButtonView: View {
+    let title: String
+    let iconName: String
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            VStack(spacing: 8) {
+                Image(systemName: iconName)
+                    .font(.system(size: 22))
+                    .foregroundColor(.white)
+                
+                Text(title)
+                    .font(.caption)
+                    .foregroundColor(.white.opacity(0.8))
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 12)
+            .background(Color.white.opacity(0.1))
+            .cornerRadius(12)
+        }
+    }
+}
+
 // Preview provider for HomeView
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
+    }
+}
+
+// Preview providers for component views
+struct HourglassView_Previews: PreviewProvider {
+    static var previews: some View {
+        ZStack {
+            Color.blue
+            HourglassView(progress: 0.12)
+                .frame(height: 300)
+                .padding()
+        }
+    }
+}
+
+struct ProgressMetricView_Previews: PreviewProvider {
+    static var previews: some View {
+        ZStack {
+            Color.blue
+            ProgressMetricView(title: "Money saved", value: "$452.23")
+        }
+        .previewLayout(.sizeThatFits)
+    }
+}
+
+struct ActionButtonView_Previews: PreviewProvider {
+    static var previews: some View {
+        ZStack {
+            Color.blue
+            ActionButtonView(
+                title: "track your day",
+                iconName: "calendar",
+                action: {}
+            )
+            .padding()
+        }
+        .previewLayout(.sizeThatFits)
     }
 } 

@@ -139,7 +139,7 @@ struct RewiringView_Previews: PreviewProvider {
 }
 
 // Preview provider for RecoveryTimelineCard
-struct RecoveryTimelineCard_Previews: PreviewProvider {
+struct RecoveryTimelineCardPreview: PreviewProvider {
     static var previews: some View {
         ZStack {
             Color.blue.ignoresSafeArea()

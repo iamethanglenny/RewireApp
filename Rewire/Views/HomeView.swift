@@ -93,6 +93,7 @@ struct HomeView: View {
                                     .font(.system(size: 70, weight: .heavy))
                                     .foregroundColor(.white)
                             }
+                            .offset(y: -20)  // Move up by 20px total
                             
                             // Achievement indicator
                             Text("you're in the top 42%")
@@ -105,6 +106,7 @@ struct HomeView: View {
                                         .stroke(Color(hex: "20FF5F"), lineWidth: 1)
                                 )
                                 .padding(.top, 5)
+                                .offset(y: -20)  // Move up by 20px total (was -10px)
                             
                             Spacer() // This pushes content up from the bottom
                         }
@@ -113,29 +115,32 @@ struct HomeView: View {
                         // Bottom half content - starts exactly at 50% mark
                         VStack(spacing: 0) {
                             // Progress metrics in a 2x2 grid - no top padding
-                            VStack(spacing: 15) {
+                            VStack(spacing: 15) {  // Decreased spacing from 30 to 20
                                 // First row
-                                HStack(spacing: 20) {
+                                HStack(spacing: 30) {
                                     ProgressMetricView(
-                                        title: "money saved",
-                                        value: "$\(String(format: "%.2f", moneySaved))"
+                                        title: "💰 money saved",
+                                        value: " $\(String(format: "%.2f", moneySaved))",
+                                        isMoneyValue: true
                                     )
                                     
                                     ProgressMetricView(
-                                        title: "life reclaimed",
-                                        value: lifeReclaimed
+                                        title: "🌱 life reclaimed",
+                                        value: lifeReclaimed,
+                                        isTimeValue: true
                                     )
                                 }
                                 
                                 // Second row
-                                HStack(spacing: 20) {
+                                HStack(spacing: 30) {
                                     ProgressMetricView(
-                                        title: "time saved",
-                                        value: "5 hrs"
+                                        title: "🕰️ time saved",
+                                        value: "5 hrs",
+                                        isTimeValue: true
                                     )
                                     
                                     ProgressMetricView(
-                                        title: "cravings overcome",
+                                        title: "🎯 cravings beat",
                                         value: "62"
                                     )
                                 }
@@ -160,7 +165,7 @@ struct HomeView: View {
                                         action: { /* Support action */ }
                                     )
                                 }
-                                .padding(.top, 25)
+                                .padding(.top, 0)
                                 
                                 // Progress bar directly below action buttons
                                 VStack(alignment: .leading) {
@@ -172,7 +177,7 @@ struct HomeView: View {
                                     ProgressBarView(progress: progressPercentage)
                                 }
                                 .padding(.horizontal, 15)
-                                .padding(.top, 25)
+                                .padding(.top, 0)
                             }
                             .padding(.horizontal)
                             .offset(y: -60)

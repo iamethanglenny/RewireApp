@@ -111,50 +111,75 @@ struct HomeView: View {
                         .frame(height: geometry.size.height * 0.5)
                         
                         // Bottom half content - starts exactly at 50% mark
-                        VStack(spacing: 20) {
-                            // Progress metrics
-                            HStack(spacing: 20) {
-                                ProgressMetricView(
-                                    title: "Money saved",
-                                    value: "$\(String(format: "%.2f", moneySaved))"
-                                )
+                        VStack(spacing: 0) {
+                            // Progress metrics in a 2x2 grid - no top padding
+                            VStack(spacing: 15) {
+                                // First row
+                                HStack(spacing: 20) {
+                                    ProgressMetricView(
+                                        title: "money saved",
+                                        value: "$\(String(format: "%.2f", moneySaved))"
+                                    )
+                                    
+                                    ProgressMetricView(
+                                        title: "life reclaimed",
+                                        value: lifeReclaimed
+                                    )
+                                }
                                 
-                                ProgressMetricView(
-                                    title: "Life reclaimed",
-                                    value: lifeReclaimed
-                                )
+                                // Second row
+                                HStack(spacing: 20) {
+                                    ProgressMetricView(
+                                        title: "time saved",
+                                        value: "5 hrs"
+                                    )
+                                    
+                                    ProgressMetricView(
+                                        title: "cravings overcome",
+                                        value: "62"
+                                    )
+                                }
+                                
+                                // Action buttons directly below the grid
+                                HStack(spacing: 30) {
+                                    CircularActionButton(
+                                        iconName: "calendar",
+                                        title: "track",
+                                        action: { /* Track day action */ }
+                                    )
+                                    
+                                    CircularActionButton(
+                                        iconName: "trophy",
+                                        title: "challenge",
+                                        action: { /* Challenge action */ }
+                                    )
+                                    
+                                    CircularActionButton(
+                                        iconName: "person.2.fill",
+                                        title: "support",
+                                        action: { /* Support action */ }
+                                    )
+                                }
+                                .padding(.top, 25)
+                                
+                                // Progress bar directly below action buttons
+                                VStack(alignment: .leading) {
+                                    Text("rewired by: 14th december 2025")
+                                        .font(.system(size: 12))
+                                        .foregroundColor(.white.opacity(0.7))
+                                        .padding(.bottom, 5)
+                                    
+                                    ProgressBarView(progress: progressPercentage)
+                                }
+                                .padding(.horizontal, 15)
+                                .padding(.top, 25)
                             }
-                            .padding(.top, 30)
-                            
-                            // Progress bar
-                            ProgressBarView(progress: progressPercentage)
-                                .padding(.horizontal, 30)
-                            
-                            // Action buttons
-                            HStack(spacing: 15) {
-                                ActionButtonView(
-                                    title: "track your day",
-                                    iconName: "calendar",
-                                    action: { /* Track day action */ }
-                                )
-                                
-                                ActionButtonView(
-                                    title: "challenge me",
-                                    iconName: "trophy",
-                                    action: { /* Challenge action */ }
-                                )
-                                
-                                ActionButtonView(
-                                    title: "get support",
-                                    iconName: "person.2.fill",
-                                    action: { /* Support action */ }
-                                )
-                            }
-                            .padding(.top, 10)
+                            .padding(.horizontal)
+                            .offset(y: -60)
                             
                             Spacer()
                         }
-                        .frame(height: geometry.size.height * 0.5)
+                        .frame(height: geometry.size.height * 0.5, alignment: .top)
                     }
                 }
             }
@@ -211,4 +236,30 @@ enum BrandGradient {
     
     // You can add more brand gradients here as needed
     // static let gradient2 = ...
+}
+
+// Circular Action Button Component
+struct CircularActionButton: View {
+    let iconName: String
+    let title: String
+    let action: () -> Void
+    
+    var body: some View {
+        VStack(spacing: 8) {
+            Button(action: action) {
+                Image(systemName: iconName)
+                    .font(.system(size: 22))
+                    .foregroundColor(.white)
+                    .frame(width: 60, height: 60)
+                    .background(
+                        Circle()
+                            .stroke(Color.white.opacity(0.3), lineWidth: 1)
+                    )
+            }
+            
+            Text(title)
+                .font(.system(size: 12))
+                .foregroundColor(.white.opacity(0.8))
+        }
+    }
 } 

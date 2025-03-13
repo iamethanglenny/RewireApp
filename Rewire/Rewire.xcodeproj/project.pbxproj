@@ -24,6 +24,7 @@
 		88E4AB442D836124006239F6 /* RecoveryTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB432D836124006239F6 /* RecoveryTimelineView.swift */; };
 		88E4AB4B2D836410006239F6 /* CravingReportCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB492D836410006239F6 /* CravingReportCard.swift */; };
 		88E4AB4C2D836410006239F6 /* CravingReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB4A2D836410006239F6 /* CravingReportsView.swift */; };
+		88E4AB4E2D836A2A006239F6 /* CommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB4D2D836A2A006239F6 /* CommunityView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		88E4AB432D836124006239F6 /* RecoveryTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryTimelineView.swift; sourceTree = "<group>"; };
 		88E4AB492D836410006239F6 /* CravingReportCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CravingReportCard.swift; sourceTree = "<group>"; };
 		88E4AB4A2D836410006239F6 /* CravingReportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CravingReportsView.swift; sourceTree = "<group>"; };
+		88E4AB4D2D836A2A006239F6 /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -112,6 +114,7 @@
 		88307E1E2D81D30B00E35A35 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				88E4AB4D2D836A2A006239F6 /* CommunityView.swift */,
 				88E4AB492D836410006239F6 /* CravingReportCard.swift */,
 				88E4AB4A2D836410006239F6 /* CravingReportsView.swift */,
 				88307E192D81D30B00E35A35 /* ActionButtonView.swift */,
@@ -298,6 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88E4AB4E2D836A2A006239F6 /* CommunityView.swift in Sources */,
 				88307E242D81D30B00E35A35 /* ProgressBarView.swift in Sources */,
 				88307E252D81D30B00E35A35 /* RewiringView.swift in Sources */,
 				88307E262D81D30B00E35A35 /* ActionButtonView.swift in Sources */,

@@ -86,6 +86,12 @@ struct ContentCardsView: View {
                 width: UIScreen.main.bounds.width - 50,
                 contentWidth: UIScreen.main.bounds.width - 70
             )
+            
+            // Community section
+            CommunityView(
+                width: UIScreen.main.bounds.width - 50,
+                contentWidth: UIScreen.main.bounds.width - 70
+            )
         }
     }
 }

@@ -5,25 +5,30 @@ struct RewiringView: View {
     @State private var selectedPeriod: TimePeriod = .week
     
     var body: some View {
-        MainContentView(selectedPeriod: $selectedPeriod)
-    }
-}
-
-// Extracted main content view to simplify the main view
-struct MainContentView: View {
-    @Binding var selectedPeriod: TimePeriod
-    
-    var body: some View {
         ZStack {
             // Black background
-            Color.black
-                .ignoresSafeArea()
+            Color.black.ignoresSafeArea()
             
-            // Top elements in their own VStack
-            HeaderView()
-            
-            // Main content in a VStack with fixed positioning
-            ContentCardsView(selectedPeriod: $selectedPeriod)
+            VStack(spacing: 0) {
+                // Fixed header at the top
+                HeaderView()
+                    .padding(.bottom, 10)
+                
+                // Scrollable content
+                ScrollView {
+                    VStack(spacing: 20) {
+                        // Add some spacing at the top
+                        Spacer().frame(height: 10)
+                        
+                        // Content cards
+                        ContentCardsView(selectedPeriod: $selectedPeriod)
+                        
+                        // Add some spacing at the bottom for better scrolling experience
+                        Spacer().frame(height: 30)
+                    }
+                    .padding(.horizontal, 25)
+                }
+            }
         }
     }
 }
@@ -55,53 +60,38 @@ struct HeaderView: View {
         }
         .padding(.top, 8)
         .padding(.leading, 25)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
-// Content cards view component
+// Content cards view component - simplified without position calculations
 struct ContentCardsView: View {
     @Binding var selectedPeriod: TimePeriod
     
-    // Calculate the vertical position once
-    private var verticalPosition: CGFloat {
-        // Break down the calculation into smaller parts
-        let headerHeight: CGFloat = 8 + 24 + 20 + 8 + 26
-        let spacing: CGFloat = 30
-        let offset: CGFloat = 100
-        let cardHeight: CGFloat = 210 / 2
-        
-        return headerHeight + spacing + offset + cardHeight
-    }
-    
     var body: some View {
-        GeometryReader { mainGeometry in
-            VStack(spacing: 20) {
-                // Graph card
-                GraphCardView(
-                    width: mainGeometry.size.width - 50,
-                    contentWidth: mainGeometry.size.width - 70,
-                    selectedPeriod: $selectedPeriod
-                )
-                
-                // Recovery Timeline section - now using the component
-                RecoveryTimelineView(
-                    width: mainGeometry.size.width - 50,
-                    contentWidth: mainGeometry.size.width - 70
-                )
-            }
-            .position(
-                x: mainGeometry.size.width / 2,
-                y: verticalPosition // Use the pre-calculated position
+        VStack(spacing: 20) {
+            // Graph card
+            GraphCardView(
+                selectedPeriod: $selectedPeriod
+            )
+            
+            // Recovery Timeline section
+            RecoveryTimelineView(
+                width: UIScreen.main.bounds.width - 50,
+                contentWidth: UIScreen.main.bounds.width - 70
+            )
+            
+            // Craving Reports section
+            CravingReportsView(
+                width: UIScreen.main.bounds.width - 50,
+                contentWidth: UIScreen.main.bounds.width - 70
             )
         }
     }
 }
 
-// Graph card view component
+// Graph card view component - simplified
 struct GraphCardView: View {
-    let width: CGFloat
-    let contentWidth: CGFloat
     @Binding var selectedPeriod: TimePeriod
     
     var body: some View {
@@ -109,7 +99,7 @@ struct GraphCardView: View {
             // Outer rounded rectangle
             RoundedRectangle(cornerRadius: 15)
                 .stroke(Color.white.opacity(0.25), lineWidth: 1)
-                .frame(width: width, height: 200)
+                .frame(width: UIScreen.main.bounds.width - 50, height: 200)
             
             // Use the reusable component
             RewiringGraphCard(
@@ -125,13 +115,11 @@ struct GraphCardView: View {
                     // Handle next period
                 }
             )
-            .frame(width: contentWidth, alignment: .leading)
+            .frame(width: UIScreen.main.bounds.width - 70, alignment: .leading)
         }
         .frame(height: 200)
     }
 }
-
-
 
 // Time period enum moved to a shared location
 enum TimePeriod: String, CaseIterable {

@@ -6,7 +6,7 @@ struct RecoveryTimelineView: View {
     
     var body: some View {
         ZStack {
-            // Outer rounded rectangle
+            // Outer rounded rectangle (reverted to original)
             RoundedRectangle(cornerRadius: 15)
                 .stroke(Color.white.opacity(0.25), lineWidth: 1)
                 .frame(width: width, height: 220)

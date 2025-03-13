@@ -41,10 +41,27 @@ struct RecoveryTimelineCard: View {
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color.black.opacity(0.3))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(isCompleted ? Color.green.opacity(0.7) : Color.white.opacity(0.3), lineWidth: 1)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .strokeBorder(
+                    LinearGradient(
+                        colors: [
+                            Color.white.opacity(0.7),
+                            isCompleted ? Color.green.opacity(0.5) : Color.blue.opacity(0.3),
+                            Color.white.opacity(0.2)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 1.2
                 )
+        )
+        .shadow(
+            color: isCompleted ? Color.green.opacity(0.2) : Color.blue.opacity(0.2),
+            radius: 4,
+            x: 0,
+            y: 2
         )
     }
 }

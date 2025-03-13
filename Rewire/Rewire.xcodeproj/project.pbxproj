@@ -21,6 +21,7 @@
 		88E4AB3A2D828B87006239F6 /* ChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB352D828B87006239F6 /* ChallengeView.swift */; };
 		88E4AB412D835BD7006239F6 /* LineGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB3F2D835BD7006239F6 /* LineGraphView.swift */; };
 		88E4AB422D835BD7006239F6 /* RewiringGraphCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB402D835BD7006239F6 /* RewiringGraphCard.swift */; };
+		88E4AB442D836124006239F6 /* RecoveryTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB432D836124006239F6 /* RecoveryTimelineView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		88E4AB372D828B87006239F6 /* TrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingView.swift; sourceTree = "<group>"; };
 		88E4AB3F2D835BD7006239F6 /* LineGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineGraphView.swift; sourceTree = "<group>"; };
 		88E4AB402D835BD7006239F6 /* RewiringGraphCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewiringGraphCard.swift; sourceTree = "<group>"; };
+		88E4AB432D836124006239F6 /* RecoveryTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryTimelineView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -111,6 +113,7 @@
 				88307E1B2D81D30B00E35A35 /* ProgressBarView.swift */,
 				88307E1C2D81D30B00E35A35 /* ProgressMetricView.swift */,
 				88307E1D2D81D30B00E35A35 /* RecoveryTimelineCard.swift */,
+				88E4AB432D836124006239F6 /* RecoveryTimelineView.swift */,
 				88E4AB3F2D835BD7006239F6 /* LineGraphView.swift */,
 				88E4AB402D835BD7006239F6 /* RewiringGraphCard.swift */,
 			);
@@ -295,6 +298,7 @@
 				88307E272D81D30B00E35A35 /* HourglassView.swift in Sources */,
 				88E4AB382D828B87006239F6 /* SupportView.swift in Sources */,
 				88E4AB392D828B87006239F6 /* TrackingView.swift in Sources */,
+				88E4AB442D836124006239F6 /* RecoveryTimelineView.swift in Sources */,
 				88E4AB3A2D828B87006239F6 /* ChallengeView.swift in Sources */,
 				88307E282D81D30B00E35A35 /* ContentView.swift in Sources */,
 				88E4AB412D835BD7006239F6 /* LineGraphView.swift in Sources */,

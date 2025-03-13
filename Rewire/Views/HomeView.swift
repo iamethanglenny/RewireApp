@@ -7,6 +7,10 @@ struct HomeView: View {
     let lifeReclaimed = "2 yrs"
     let progressPercentage: CGFloat = 0.12
     
+    @State private var showingTrackingView = false
+    @State private var showingChallengeView = false
+    @State private var showingSupportView = false
+    
     var body: some View {
         ZStack {
             // Background color - solid black
@@ -15,7 +19,7 @@ struct HomeView: View {
             
             // Background image - top 50% of screen
             VStack {
-                Image("homeBackground")
+                Image("homeBackground2")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: UIScreen.main.bounds.width)
@@ -120,7 +124,7 @@ struct HomeView: View {
                                 HStack(spacing: 30) {
                                     ProgressMetricView(
                                         title: "💰 money saved",
-                                        value: " $\(String(format: "%.2f", moneySaved))",
+                                        value: "$\(String(format: "%.2f", moneySaved))",
                                         isMoneyValue: true
                                     )
                                     
@@ -150,19 +154,25 @@ struct HomeView: View {
                                     CircularActionButton(
                                         iconName: "calendar",
                                         title: "track",
-                                        action: { /* Track day action */ }
+                                        action: { 
+                                            showingTrackingView = true 
+                                        }
                                     )
                                     
                                     CircularActionButton(
                                         iconName: "trophy",
                                         title: "challenge",
-                                        action: { /* Challenge action */ }
+                                        action: { 
+                                            showingChallengeView = true 
+                                        }
                                     )
                                     
                                     CircularActionButton(
                                         iconName: "person.2.fill",
                                         title: "support",
-                                        action: { /* Support action */ }
+                                        action: { 
+                                            showingSupportView = true 
+                                        }
                                     )
                                 }
                                 .padding(.top, 0)
@@ -188,7 +198,18 @@ struct HomeView: View {
                     }
                 }
             }
-            .ignoresSafeArea(edges: .top)
+        }
+        .ignoresSafeArea(edges: .top)
+        
+        // Add sheet presentations for the new views
+        .sheet(isPresented: $showingTrackingView) {
+            TrackingView()
+        }
+        .sheet(isPresented: $showingChallengeView) {
+            ChallengeView()
+        }
+        .sheet(isPresented: $showingSupportView) {
+            SupportView()
         }
     }
 }

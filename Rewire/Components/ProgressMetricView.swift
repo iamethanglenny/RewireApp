@@ -1,56 +1,67 @@
 import SwiftUI
 
 struct ProgressMetricView: View {
-    let title: String
-    let value: String
+    var title: String
+    var value: String
+    var icon: String?
     var isMoneyValue: Bool = false
     var isTimeValue: Bool = false
     
     var body: some View {
-        VStack(alignment: .center, spacing: 8) {
+        VStack(alignment: .center, spacing: 5) {
             Text(title)
-                .font(.system(size: 20))
-                .foregroundColor(.white.opacity(0.7))
-                .multilineTextAlignment(.center)
+                .font(.system(size: 20, weight: .bold))
+                .foregroundColor(.white)
             
-            if isMoneyValue, let formattedValue = formatMoneyValue(value) {
-                HStack(alignment: .firstTextBaseline, spacing: 0) {
-                    Text("$")
-                        .font(.system(size: 25))
-                        .foregroundColor(.white.opacity(0.5))
-                    
-                    Text(formattedValue.dollars)
-                        .font(.system(size: 37, weight: .black))
+            if isMoneyValue {
+                if let formattedValue = formatMoneyValue(value) {
+                    HStack(alignment: .firstTextBaseline, spacing: 0) {
+                        Text("$")
+                            .font(.system(size: 25))
+                            .foregroundColor(.white.opacity(0.5))
+                        
+                        Text(formattedValue.dollars)
+                            .font(.system(size: 37, weight: .bold))
+                            .foregroundColor(.white)
+                        
+                        Text(formattedValue.cents)
+                            .font(.system(size: 25))
+                            .foregroundColor(.white.opacity(0.5))
+                    }
+                } else {
+                    Text(value)
+                        .font(.system(size: 37, weight: .bold))
                         .foregroundColor(.white)
-                    
-                    Text(formattedValue.cents)
-                        .font(.system(size: 25))
-                        .foregroundColor(.white.opacity(0.5))
                 }
-            } else if isTimeValue, let formattedValue = formatTimeValue(value) {
-                HStack(alignment: .firstTextBaseline, spacing: 2) {
-                    Text(formattedValue.number)
-                        .font(.system(size: 37, weight: .black))
+            } else if isTimeValue {
+                if let formattedValue = formatTimeValue(value) {
+                    HStack(alignment: .firstTextBaseline, spacing: 0) {
+                        Text(formattedValue.number)
+                            .font(.system(size: 37, weight: .bold))
+                            .foregroundColor(.white)
+                        
+                        Text(" \(formattedValue.unit)")
+                            .font(.system(size: 25))
+                            .foregroundColor(.white.opacity(0.5))
+                    }
+                } else {
+                    Text(value)
+                        .font(.system(size: 37, weight: .bold))
                         .foregroundColor(.white)
-                    
-                    Text(formattedValue.unit)
-                        .font(.system(size: 25))
-                        .foregroundColor(.white.opacity(0.5))
                 }
             } else {
                 Text(value)
-                    .font(.system(size: 37, weight: .black))
+                    .font(.system(size: 37, weight: .bold))
                     .foregroundColor(.white)
             }
         }
-        .frame(minWidth: 120)
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 5)
+        .padding()
+        .frame(height: 90) // Increased height to accommodate larger text
     }
     
     private func formatMoneyValue(_ value: String) -> (dollars: String, cents: String)? {
         // Remove any existing $ sign
-        let cleanValue = value.replacingOccurrences(of: "$", with: "")
+        let cleanValue = value.replacingOccurrences(of: "$", with: "").trimmingCharacters(in: .whitespaces)
         
         // Split by decimal point
         let components = cleanValue.components(separatedBy: ".")
@@ -65,7 +76,7 @@ struct ProgressMetricView: View {
     
     private func formatTimeValue(_ value: String) -> (number: String, unit: String)? {
         // Regular expression to separate number and unit
-        let pattern = "^(\\d+)\\s*([a-zA-Z]+)$"
+        let pattern = "^\\s*(\\d+)\\s*([a-zA-Z]+)\\s*$"
         let regex = try? NSRegularExpression(pattern: pattern)
         
         if let regex = regex,
@@ -83,15 +94,15 @@ struct ProgressMetricView: View {
 struct ProgressMetricView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
-            Color.black
-            VStack(spacing: 30) {
+            Color.black.edgesIgnoringSafeArea(.all)
+            
+            VStack(spacing: 20) {
                 ProgressMetricView(title: "💰 money saved", value: "$452.23", isMoneyValue: true)
                 ProgressMetricView(title: "🌱 life reclaimed", value: "2 yrs", isTimeValue: true)
                 ProgressMetricView(title: "🕰️ time saved", value: "5 hrs", isTimeValue: true)
-                ProgressMetricView(title: "🎯 cravings overcome", value: "62")
+                ProgressMetricView(title: "🎯 cravings beat", value: "62")
             }
             .padding()
         }
-        .previewLayout(.sizeThatFits)
     }
 } 

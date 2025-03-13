@@ -1,95 +1,81 @@
 import SwiftUI
 
 struct RewiringView: View {
+    // State to track which time period is selected
+    @State private var selectedPeriod: TimePeriod = .week
+    
     var body: some View {
         ZStack {
-            // Background gradient
-            LinearGradient(
-                gradient: Gradient(colors: [Color("BackgroundTop"), Color("BackgroundBottom")]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
+            // Black background
+            Color.black
+                .ignoresSafeArea()
             
-            VStack {
-                // Top navigation bar
-                HStack {
-                    Text("REWIRING")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        // Action for GET PRO button
-                    }) {
-                        Text("GET PRO")
-                            .font(.subheadline)
-                            .fontWeight(.bold)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
-                            .background(Color.yellow)
-                            .foregroundColor(.black)
-                            .cornerRadius(20)
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.top, 8)
+            // Top elements in their own VStack
+            VStack(alignment: .leading, spacing: 4) {
+                Text("REWIRING")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
                 
-                // Main content
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 20) {
-                        Text("Your Brain Recovery")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding(.horizontal)
-                        
-                        // Recovery timeline cards
-                        RecoveryTimelineCard(
-                            dayRange: "Days 1-3",
-                            title: "Nicotine Withdrawal",
-                            description: "Your body is clearing out nicotine and adjusting to its absence. You may experience cravings, irritability, and headaches.",
-                            isCompleted: true
-                        )
-                        
-                        RecoveryTimelineCard(
-                            dayRange: "Days 4-10",
-                            title: "Brain Fog Clearing",
-                            description: "Acetylcholine receptors are beginning to return to normal. Mental clarity starts to improve.",
-                            isCompleted: true
-                        )
-                        
-                        RecoveryTimelineCard(
-                            dayRange: "Days 11-30",
-                            title: "Dopamine Rebalancing",
-                            description: "Your brain's reward system is starting to normalize. Natural pleasures become more satisfying.",
-                            isCompleted: false
-                        )
-                        
-                        RecoveryTimelineCard(
-                            dayRange: "Days 31-90",
-                            title: "Neural Pathway Rewiring",
-                            description: "New habits are forming. The brain is creating healthier connections not associated with vaping.",
-                            isCompleted: false
-                        )
-                        
-                        RecoveryTimelineCard(
-                            dayRange: "Days 91+",
-                            title: "Long-term Recovery",
-                            description: "Risk of relapse significantly decreases. Your brain has largely adapted to life without nicotine.",
-                            isCompleted: false
-                        )
-                    }
-                    .padding(.vertical)
+                Text("insights & stats")
+                    .font(.headline)
+                    .foregroundColor(.white.opacity(0.8))
+                
+                Text("top 42%")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundColor(Color.green)
+                    .padding(.vertical, 4)
+                    .padding(.horizontal, 8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 30)
+                            .stroke(Color.green, lineWidth: 1)
+                    )
+                    .padding(.top, 2)
+            }
+            .padding(.top, 8)
+            .padding(.leading, 25)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            
+            // Calculate position to be 30px below the green rectangle
+            GeometryReader { geometry in
+                ZStack {
+                    // Outer rounded rectangle - increased width to match top content
+                    RoundedRectangle(cornerRadius: 15)
+                        .stroke(Color.white.opacity(0.25), lineWidth: 1)
+                        .frame(width: geometry.size.width - 50, height: 200)
+                    
+                    // Use the reusable component
+                    RewiringGraphCard(
+                        selectedPeriod: $selectedPeriod,
+                        dataPoints: [20, 40, 30, 60, 25, 45, 35],
+                        averageTime: "2hrs, 22 mins",
+                        subtitle: "Avg Craving Intervals",
+                        timeRange: "last 7 days",
+                        onPreviousPeriod: {
+                            // Handle previous period
+                        },
+                        onNextPeriod: {
+                            // Handle next period
+                        }
+                    )
+                    .frame(width: geometry.size.width - 70, alignment: .leading)
                 }
+                .position(
+                    x: geometry.size.width / 2,
+                    y: 8 + 24 + 20 + 8 + 26 + 30 + 100
+                )
             }
         }
     }
 }
 
-
+// Time period enum moved to a shared location
+enum TimePeriod: String, CaseIterable {
+    case week = "week"
+    case month = "month"
+    case lifetime = "lifetime"
+}
 
 // Preview provider for RewiringView
 struct RewiringView_Previews: PreviewProvider {

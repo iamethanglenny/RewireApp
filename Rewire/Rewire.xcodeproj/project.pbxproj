@@ -25,6 +25,12 @@
 		88E4AB4B2D836410006239F6 /* CravingReportCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB492D836410006239F6 /* CravingReportCard.swift */; };
 		88E4AB4C2D836410006239F6 /* CravingReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB4A2D836410006239F6 /* CravingReportsView.swift */; };
 		88E4AB4E2D836A2A006239F6 /* CommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB4D2D836A2A006239F6 /* CommunityView.swift */; };
+		88E4AB552D83B77D006239F6 /* WellbeingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB522D83B77D006239F6 /* WellbeingButton.swift */; };
+		88E4AB562D83B77D006239F6 /* RatingPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB512D83B77D006239F6 /* RatingPill.swift */; };
+		88E4AB572D83B77D006239F6 /* WellbeingFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB532D83B77D006239F6 /* WellbeingFormView.swift */; };
+		88E4AB582D83B77D006239F6 /* DailyCheckInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB4F2D83B77D006239F6 /* DailyCheckInView.swift */; };
+		88E4AB592D83B77D006239F6 /* NoteWritingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB502D83B77D006239F6 /* NoteWritingView.swift */; };
+		88E4AB5A2D83B77D006239F6 /* WellbeingRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB542D83B77D006239F6 /* WellbeingRatingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +72,12 @@
 		88E4AB492D836410006239F6 /* CravingReportCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CravingReportCard.swift; sourceTree = "<group>"; };
 		88E4AB4A2D836410006239F6 /* CravingReportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CravingReportsView.swift; sourceTree = "<group>"; };
 		88E4AB4D2D836A2A006239F6 /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
+		88E4AB4F2D83B77D006239F6 /* DailyCheckInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCheckInView.swift; sourceTree = "<group>"; };
+		88E4AB502D83B77D006239F6 /* NoteWritingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteWritingView.swift; sourceTree = "<group>"; };
+		88E4AB512D83B77D006239F6 /* RatingPill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingPill.swift; sourceTree = "<group>"; };
+		88E4AB522D83B77D006239F6 /* WellbeingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WellbeingButton.swift; sourceTree = "<group>"; };
+		88E4AB532D83B77D006239F6 /* WellbeingFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WellbeingFormView.swift; sourceTree = "<group>"; };
+		88E4AB542D83B77D006239F6 /* WellbeingRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WellbeingRatingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -114,6 +126,12 @@
 		88307E1E2D81D30B00E35A35 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				88E4AB4F2D83B77D006239F6 /* DailyCheckInView.swift */,
+				88E4AB502D83B77D006239F6 /* NoteWritingView.swift */,
+				88E4AB512D83B77D006239F6 /* RatingPill.swift */,
+				88E4AB522D83B77D006239F6 /* WellbeingButton.swift */,
+				88E4AB532D83B77D006239F6 /* WellbeingFormView.swift */,
+				88E4AB542D83B77D006239F6 /* WellbeingRatingView.swift */,
 				88E4AB4D2D836A2A006239F6 /* CommunityView.swift */,
 				88E4AB492D836410006239F6 /* CravingReportCard.swift */,
 				88E4AB4A2D836410006239F6 /* CravingReportsView.swift */,
@@ -315,6 +333,12 @@
 				88E4AB422D835BD7006239F6 /* RewiringGraphCard.swift in Sources */,
 				88307E292D81D30B00E35A35 /* RecoveryTimelineCard.swift in Sources */,
 				88307E2A2D81D30B00E35A35 /* ProfileView.swift in Sources */,
+				88E4AB552D83B77D006239F6 /* WellbeingButton.swift in Sources */,
+				88E4AB562D83B77D006239F6 /* RatingPill.swift in Sources */,
+				88E4AB572D83B77D006239F6 /* WellbeingFormView.swift in Sources */,
+				88E4AB582D83B77D006239F6 /* DailyCheckInView.swift in Sources */,
+				88E4AB592D83B77D006239F6 /* NoteWritingView.swift in Sources */,
+				88E4AB5A2D83B77D006239F6 /* WellbeingRatingView.swift in Sources */,
 				88307E2B2D81D30B00E35A35 /* HomeView.swift in Sources */,
 				88307E2C2D81D30B00E35A35 /* ProgressMetricView.swift in Sources */,
 				88E4AB4B2D836410006239F6 /* CravingReportCard.swift in Sources */,

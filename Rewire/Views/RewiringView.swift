@@ -81,14 +81,14 @@ struct ContentCardsView: View {
                 contentWidth: UIScreen.main.bounds.width - 70
             )
             
-            // Craving Reports section
-            CravingReportsView(
+            // Community section - moved above Craving Reports
+            CommunityView(
                 width: UIScreen.main.bounds.width - 50,
                 contentWidth: UIScreen.main.bounds.width - 70
             )
             
-            // Community section
-            CommunityView(
+            // Craving Reports section - now after Community
+            CravingReportsView(
                 width: UIScreen.main.bounds.width - 50,
                 contentWidth: UIScreen.main.bounds.width - 70
             )

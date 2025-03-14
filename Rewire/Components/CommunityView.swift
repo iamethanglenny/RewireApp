@@ -5,26 +5,23 @@ struct CommunityView: View {
     let contentWidth: CGFloat
     
     var body: some View {
-        // Fixed height approach for better centering
         ZStack {
-            // Outer rounded rectangle with reduced height
+            // Outer rounded rectangle with adjusted height
             RoundedRectangle(cornerRadius: 15)
                 .stroke(Color.white.opacity(0.25), lineWidth: 1)
-                .frame(width: width, height: 145)
+                .frame(width: width, height: 160)
             
-            // Content inside the rectangle with proper padding
-            VStack(alignment: .leading, spacing: 0) {
-                // Add extra space at the top to push content down
-                Spacer()
-                    .frame(height: 10)
+            // Content inside the rectangle with proper padding and spacing
+            VStack(alignment: .leading, spacing: 2) {
+                // Add space at the top to match CravingReportsView
+                Spacer().frame(height: 25)
                 
                 // Header
                 Text("Community")
                     .font(.system(size: 16, weight: .bold))
                     .foregroundColor(.white)
-                    .padding(.top, 10) // Keep original padding
                 
-                // Subtitle with fixed spacing
+                // Subtitle with same spacing as CravingReportsView
                 Text("Your cravings were 53% lower than your peers yesterday. Keep up the great work!")
                     .font(.caption)
                     .foregroundColor(.white.opacity(0.7))
@@ -32,17 +29,17 @@ struct CommunityView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 2)
                 
-                // Spectrum Graph with fixed spacing
+                // Spectrum Graph with user positioning
                 SpectrumComparisonView(contentWidth: contentWidth - 20)
-                    .padding(.top, 0)
+                    .padding(.top, 8)
                     .padding(.bottom, 10)
                 
                 Spacer() // Push content to the top
             }
-            .padding(10)
+            .padding(15) // Same padding as CravingReportsView
             .frame(width: contentWidth, alignment: .leading)
         }
-        .frame(height: 145)
+        .frame(height: 160)
     }
 }
 

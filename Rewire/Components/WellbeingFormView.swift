@@ -2,8 +2,10 @@ import SwiftUI
 
 struct WellbeingFormView: View {
     @Binding var isPresented: Bool
+    @State private var returnToHome = false
     let stayedClean: Bool
     @State private var showingNoteWriter = false
+    @State private var showingCelebration = false
     @State private var savedNote: String = ""
     
     var body: some View {
@@ -172,7 +174,7 @@ struct WellbeingFormView: View {
                         
                         // Done button at the bottom
                         Button(action: {
-                            isPresented = false
+                            showingCelebration = true
                         }) {
                             Text("Done")
                                 .font(.system(size: 18, weight: .medium))
@@ -190,6 +192,21 @@ struct WellbeingFormView: View {
         }
         .fullScreenCover(isPresented: $showingNoteWriter) {
             NoteWritingView(savedNote: $savedNote)
+        }
+        .fullScreenCover(isPresented: $showingCelebration) {
+            CelebrationView(returnToHome: $returnToHome)
+                .onDisappear {
+                    if returnToHome {
+                        // If returnToHome is true, dismiss all the way back to home
+                        isPresented = false
+                    }
+                }
+        }
+        .onChange(of: returnToHome) { _, newValue in
+            if newValue {
+                // If returnToHome becomes true, dismiss this view
+                isPresented = false
+            }
         }
     }
 } 

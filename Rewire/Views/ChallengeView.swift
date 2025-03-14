@@ -1,5 +1,8 @@
 import SwiftUI
 
+// You can also add this line to be explicit about using SwiftUI's ProgressView
+typealias ProgressViewType = SwiftUI.ProgressView<EmptyView, EmptyView>
+
 struct ChallengeView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var selectedChallenge: Challenge? = nil
@@ -131,7 +134,7 @@ struct ChallengeCard: View {
                 }
                 
                 if challenge.progress > 0 {
-                    ProgressView(value: challenge.progress)
+                    SwiftUI.ProgressView(value: challenge.progress, total: 1.0)
                         .progressViewStyle(LinearProgressViewStyle(tint: .blue))
                 }
             }
@@ -190,7 +193,7 @@ struct ChallengeDetailView: View {
                     Text("Progress")
                         .font(.headline)
                     
-                    ProgressView(value: challenge.progress)
+                    SwiftUI.ProgressView(value: challenge.progress, total: 1.0)
                         .progressViewStyle(LinearProgressViewStyle(tint: .blue))
                     
                     HStack {

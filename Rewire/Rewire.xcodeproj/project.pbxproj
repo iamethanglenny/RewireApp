@@ -31,6 +31,8 @@
 		88E4AB582D83B77D006239F6 /* DailyCheckInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB4F2D83B77D006239F6 /* DailyCheckInView.swift */; };
 		88E4AB592D83B77D006239F6 /* NoteWritingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB502D83B77D006239F6 /* NoteWritingView.swift */; };
 		88E4AB5A2D83B77D006239F6 /* WellbeingRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB542D83B77D006239F6 /* WellbeingRatingView.swift */; };
+		88E4AB5C2D83C776006239F6 /* CelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB5B2D83C776006239F6 /* CelebrationView.swift */; };
+		88E4AB5E2D83CA46006239F6 /* DailyLogOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB5D2D83CA46006239F6 /* DailyLogOverviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +80,8 @@
 		88E4AB522D83B77D006239F6 /* WellbeingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WellbeingButton.swift; sourceTree = "<group>"; };
 		88E4AB532D83B77D006239F6 /* WellbeingFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WellbeingFormView.swift; sourceTree = "<group>"; };
 		88E4AB542D83B77D006239F6 /* WellbeingRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WellbeingRatingView.swift; sourceTree = "<group>"; };
+		88E4AB5B2D83C776006239F6 /* CelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationView.swift; sourceTree = "<group>"; };
+		88E4AB5D2D83CA46006239F6 /* DailyLogOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLogOverviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -126,6 +130,8 @@
 		88307E1E2D81D30B00E35A35 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				88E4AB5D2D83CA46006239F6 /* DailyLogOverviewView.swift */,
+				88E4AB5B2D83C776006239F6 /* CelebrationView.swift */,
 				88E4AB4F2D83B77D006239F6 /* DailyCheckInView.swift */,
 				88E4AB502D83B77D006239F6 /* NoteWritingView.swift */,
 				88E4AB512D83B77D006239F6 /* RatingPill.swift */,
@@ -325,6 +331,7 @@
 				88307E262D81D30B00E35A35 /* ActionButtonView.swift in Sources */,
 				88307E272D81D30B00E35A35 /* HourglassView.swift in Sources */,
 				88E4AB382D828B87006239F6 /* SupportView.swift in Sources */,
+				88E4AB5E2D83CA46006239F6 /* DailyLogOverviewView.swift in Sources */,
 				88E4AB392D828B87006239F6 /* TrackingView.swift in Sources */,
 				88E4AB442D836124006239F6 /* RecoveryTimelineView.swift in Sources */,
 				88E4AB3A2D828B87006239F6 /* ChallengeView.swift in Sources */,
@@ -338,6 +345,7 @@
 				88E4AB572D83B77D006239F6 /* WellbeingFormView.swift in Sources */,
 				88E4AB582D83B77D006239F6 /* DailyCheckInView.swift in Sources */,
 				88E4AB592D83B77D006239F6 /* NoteWritingView.swift in Sources */,
+				88E4AB5C2D83C776006239F6 /* CelebrationView.swift in Sources */,
 				88E4AB5A2D83B77D006239F6 /* WellbeingRatingView.swift in Sources */,
 				88307E2B2D81D30B00E35A35 /* HomeView.swift in Sources */,
 				88307E2C2D81D30B00E35A35 /* ProgressMetricView.swift in Sources */,

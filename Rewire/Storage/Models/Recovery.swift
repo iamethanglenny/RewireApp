@@ -9,7 +9,7 @@ final class RecoveryMilestone {
     var addictionType: AddictionType
     var dayRange: String // e.g., "Days 1-3", "Days 4-7", etc.
     var title: String
-    var description: String
+    var milestoneDescription: String
     var startDay: Int
     var endDay: Int
     
@@ -27,7 +27,7 @@ final class RecoveryMilestone {
         self.addictionType = addictionType
         self.dayRange = dayRange
         self.title = title
-        self.description = description
+        self.milestoneDescription = description
         self.startDay = startDay
         self.endDay = endDay
     }

@@ -58,7 +58,7 @@ class TrackingViewModel: ObservableObject {
         let sevenDaysAgo = calendar.date(byAdding: .day, value: -7, to: Date()) ?? Date()
         
         let recentLogs = dailyLogs.filter { $0.date >= sevenDaysAgo }
-        recentCravings = recentLogs.flatMap { $0.cravings }
+        recentCravings = recentLogs.flatMap { $0.cravings ?? [] }
             .sorted { $0.timestamp > $1.timestamp }
     }
     
@@ -80,10 +80,12 @@ class TrackingViewModel: ObservableObject {
         
         // Populate trends
         for log in recentLogs {
-            wellbeingTrends["mood"]?.append(log.wellbeingRatings.mood)
-            wellbeingTrends["energy"]?.append(log.wellbeingRatings.energy)
-            wellbeingTrends["sleep"]?.append(log.wellbeingRatings.sleep)
-            wellbeingTrends["cravingIntensity"]?.append(log.wellbeingRatings.cravingIntensity)
+            if let ratings = log.wellbeingRatings {
+                wellbeingTrends["mood"]?.append(ratings.mood)
+                wellbeingTrends["energy"]?.append(ratings.energy)
+                wellbeingTrends["sleep"]?.append(ratings.sleep)
+                wellbeingTrends["cravingIntensity"]?.append(ratings.cravingIntensity)
+            }
         }
     }
     

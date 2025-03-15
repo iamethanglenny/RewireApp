@@ -1,4 +1,6 @@
 import SwiftUI
+// Import the shared TimePeriod enum
+// Note: After adding the Shared directory to your Xcode project, you may need to adjust this import
 
 struct RewiringGraphCard: View {
     @Binding var selectedPeriod: TimePeriod

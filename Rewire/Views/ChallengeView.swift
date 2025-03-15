@@ -39,7 +39,7 @@ struct ChallengeView: View {
                                     .font(.headline)
                                     .padding(.leading)
                                 
-                                ForEach(challenges.filter { $0.progress > 0 }, id: \.id) { challenge in
+                                ForEach(challenges.filter { $0.progress > 0.0 }, id: \.id) { challenge in
                                     ChallengeCard(challenge: challenge)
                                         .onTapGesture {
                                             selectedChallenge = challenge
@@ -53,7 +53,7 @@ struct ChallengeView: View {
                                     .font(.headline)
                                     .padding(.leading)
                                 
-                                ForEach(challenges.filter { $0.progress == 0 }, id: \.id) { challenge in
+                                ForEach(challenges.filter { $0.progress == 0.0 }, id: \.id) { challenge in
                                     ChallengeCard(challenge: challenge)
                                         .onTapGesture {
                                             selectedChallenge = challenge

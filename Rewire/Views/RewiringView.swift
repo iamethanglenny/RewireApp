@@ -1,4 +1,6 @@
 import SwiftUI
+// Import the shared TimePeriod enum
+// Note: After adding the Shared directory to your Xcode project, you may need to adjust this import
 
 struct RewiringView: View {
     // State to track which time period is selected
@@ -127,12 +129,6 @@ struct GraphCardView: View {
     }
 }
 
-// Time period enum moved to a shared location
-enum TimePeriod: String, CaseIterable {
-    case week = "week"
-    case month = "month"
-    case lifetime = "lifetime"
-}
 
 // Preview provider for RewiringView
 struct RewiringView_Previews: PreviewProvider {

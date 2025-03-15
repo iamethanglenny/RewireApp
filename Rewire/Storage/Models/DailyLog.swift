@@ -1,38 +1,50 @@
 import Foundation
+import SwiftData
 
-struct DailyLog: Codable, Identifiable {
-    var id: String
-    var userId: String
+// MARK: - DailyLog Model
+
+@Model
+final class DailyLog {
+    @Attribute(.unique) var id: String
     var date: Date
     var stayedClean: Bool
-    var wellbeingRatings: WellbeingRatings
     var note: String?
-    var cravings: [CravingRecord]
+    
+    // Relationships
+    @Relationship(.cascade) var wellbeingRatings: WellbeingRatings?
+    @Relationship(.cascade) var cravings: [CravingRecord]?
+    var user: User?
     
     init(id: String = UUID().uuidString,
-         userId: String,
          date: Date = Date(),
          stayedClean: Bool = true,
-         wellbeingRatings: WellbeingRatings = WellbeingRatings(),
-         note: String? = nil,
-         cravings: [CravingRecord] = []) {
+         note: String? = nil) {
         self.id = id
-        self.userId = userId
         self.date = date
         self.stayedClean = stayedClean
-        self.wellbeingRatings = wellbeingRatings
         self.note = note
-        self.cravings = cravings
     }
 }
 
-struct WellbeingRatings: Codable {
+// MARK: - WellbeingRatings Model
+
+@Model
+final class WellbeingRatings {
+    @Attribute(.unique) var id: String
     var mood: Int
     var energy: Int
     var sleep: Int
     var cravingIntensity: Int
     
-    init(mood: Int = 3, energy: Int = 3, sleep: Int = 3, cravingIntensity: Int = 3) {
+    // Relationships
+    var dailyLog: DailyLog?
+    
+    init(id: String = UUID().uuidString,
+         mood: Int = 3, 
+         energy: Int = 3, 
+         sleep: Int = 3, 
+         cravingIntensity: Int = 3) {
+        self.id = id
         self.mood = mood
         self.energy = energy
         self.sleep = sleep
@@ -40,8 +52,11 @@ struct WellbeingRatings: Codable {
     }
 }
 
-struct CravingRecord: Codable, Identifiable {
-    var id: String
+// MARK: - CravingRecord Model
+
+@Model
+final class CravingRecord {
+    @Attribute(.unique) var id: String
     var timestamp: Date
     var intensity: Int // 1-5 scale
     var duration: TimeInterval // in seconds
@@ -49,6 +64,9 @@ struct CravingRecord: Codable, Identifiable {
     var location: String?
     var overcame: Bool
     var notes: String?
+    
+    // Relationships
+    var dailyLog: DailyLog?
     
     init(id: String = UUID().uuidString,
          timestamp: Date = Date(),

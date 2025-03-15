@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import Combine
+import SwiftData
 
 class AppState: ObservableObject {
     // Singleton instance
@@ -15,6 +16,9 @@ class AppState: ObservableObject {
     @Published var isOnboarding: Bool = false
     @Published var isLoggedIn: Bool = false
     @Published var selectedTab: Int = 0
+    
+    // Data manager
+    private let dataManager = SwiftDataManager.shared
     
     // Cancellables for Combine subscriptions
     private var cancellables = Set<AnyCancellable>()
@@ -35,7 +39,7 @@ class AppState: ObservableObject {
     
     private func checkUserStatus() {
         // Check if user exists in storage
-        isLoggedIn = StorageManager.shared.currentUser != nil
+        isLoggedIn = dataManager.currentUser != nil
         isOnboarding = !isLoggedIn
     }
     
@@ -100,7 +104,7 @@ class AppState: ObservableObject {
     }
     
     func updateRecoveryProgress() {
-        userViewModel.updateRecoveryProgress()
+        dataManager.updateRecoveryProgress()
     }
     
     // MARK: - Statistics

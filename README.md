@@ -52,6 +52,10 @@ The Rewire app is organized into the following directories:
     - **Models/**: Data models
     - **ViewModels/**: View models for connecting storage to UI
     - **Extensions/**: Utility extensions for storage functionality
+    - **CoreData/**: Core Data implementation for persistent storage
+      - **PersistenceController.swift**: Manages the Core Data stack
+      - **CoreDataManager.swift**: CRUD operations for Core Data entities
+      - **RewireModel.xcdatamodeld**: Core Data model file
   - **Tests/**: Unit and UI tests
 
 ## Setup Instructions
@@ -65,7 +69,21 @@ The Rewire app is organized into the following directories:
    - Ensure "Copy items if needed" is unchecked
    - Make sure your main app target is selected
    - Click "Add"
-4. Build and run the app
+4. Ensure the Core Data model file is properly added to your project:
+   - If RewireModel.xcdatamodeld doesn't appear in the Project Navigator, add it separately
+   - Make sure it's included in your app target
+5. Build and run the app
+
+## Data Storage
+
+The app uses Core Data for persistent storage of user data, challenges, daily logs, and more. The Core Data implementation includes:
+
+- A complete data model with entities for User, Challenge, DailyLog, etc.
+- Relationships between entities to maintain data integrity
+- A migration path from the previous file-based storage system
+- A CoreDataManager class for simplified CRUD operations
+
+For more details on the Core Data implementation, see the [Core Data README](Rewire/Storage/CoreData/README.md).
 
 ## Support
 

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import SwiftData
 
 // We need to make sure the Storage directory is added to the Xcode project target
 // This can be done in Xcode by:
@@ -17,10 +18,25 @@ import Combine
 // 5. Make sure your main app target is selected
 // 6. Click "Add"
 
+// Also, make sure to add the CoreData directory to your project
+// And add the RewireModel.xcdatamodeld file to your project
+
 @main
 struct RewireApp: App {
     // Use the AppState from the Storage directory
     @StateObject private var appState = AppState.shared
+    
+    // Initialize the SwiftData manager
+    private let swiftDataManager = SwiftDataManager.shared
+    
+    init() {
+        // Perform any one-time setup here
+        // For example, you might want to migrate data from file storage to SwiftData
+        // if it's the first time running with SwiftData
+        
+        // Uncomment this line when you're ready to migrate
+        // SwiftDataManager.shared.migrateFromFileStorage(storageManager: StorageManager.shared)
+    }
     
     var body: some Scene {
         WindowGroup {

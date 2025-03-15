@@ -1,5 +1,12 @@
 import Foundation
 import Combine
+import SwiftData
+
+enum TimePeriod {
+    case week
+    case month
+    case lifetime
+}
 
 class TrackingViewModel: ObservableObject {
     // Published properties for reactive UI updates
@@ -8,28 +15,27 @@ class TrackingViewModel: ObservableObject {
     @Published var recentCravings: [CravingRecord] = []
     @Published var wellbeingTrends: [String: [Int]] = [:]
     
-    // Reference to storage manager
-    private let storageManager = StorageManager.shared
+    // Reference to data manager
+    private let dataManager = SwiftDataManager.shared
     
     // Cancellables for Combine subscriptions
     private var cancellables = Set<AnyCancellable>()
     
     init() {
-        // Subscribe to storage manager changes
+        // Subscribe to data manager changes
         setupSubscriptions()
+        
+        // Load initial data
+        loadData()
     }
     
     private func setupSubscriptions() {
         // Subscribe to daily logs changes
-        storageManager.$dailyLogs
+        dataManager.$dailyLogs
             .sink { [weak self] logs in
-                guard let userId = self?.storageManager.currentUser?.id else { return }
-                
-                // Filter logs for current user and sort by date (newest first)
-                let userLogs = logs.filter { $0.userId == userId }
+                guard let userId = self?.dataManager.currentUser?.id else { return }
+                self?.dailyLogs = logs.filter { $0.user?.id == userId }
                     .sorted { $0.date > $1.date }
-                
-                self?.dailyLogs = userLogs
                 self?.updateTodayLog()
                 self?.updateRecentCravings()
                 self?.calculateWellbeingTrends()
@@ -37,8 +43,19 @@ class TrackingViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+    private func loadData() {
+        guard let userId = dataManager.currentUser?.id else { return }
+        
+        // Load daily logs
+        dailyLogs = dataManager.dailyLogs.filter { $0.user?.id == userId }
+            .sorted { $0.date > $1.date }
+        
+        // Update today's log
+        updateTodayLog()
+    }
+    
     private func updateTodayLog() {
-        todayLog = storageManager.getDailyLog(for: Date())
+        todayLog = dataManager.getDailyLog(for: Date())
     }
     
     private func updateRecentCravings() {
@@ -79,33 +96,18 @@ class TrackingViewModel: ObservableObject {
     // MARK: - Daily Log Management
     
     func saveDailyLog(stayedClean: Bool, wellbeingRatings: WellbeingRatings, note: String? = nil) {
-        guard let userId = storageManager.currentUser?.id else { return }
+        _ = dataManager.saveDailyLog(
+            stayedClean: stayedClean,
+            wellbeingRatings: wellbeingRatings,
+            note: note
+        )
         
-        if var log = todayLog {
-            // Update existing log
-            log.stayedClean = stayedClean
-            log.wellbeingRatings = wellbeingRatings
-            log.note = note
-            
-            storageManager.saveDailyLog(log)
-        } else {
-            // Create new log
-            let newLog = DailyLog(
-                userId: userId,
-                stayedClean: stayedClean,
-                wellbeingRatings: wellbeingRatings,
-                note: note
-            )
-            
-            storageManager.saveDailyLog(newLog)
-        }
-        
-        // Update streak if needed
-        updateStreakIfNeeded(stayedClean: stayedClean)
+        // Update today's log
+        updateTodayLog()
     }
     
     func addCravingRecord(intensity: Int, duration: TimeInterval, trigger: String? = nil, location: String? = nil, overcame: Bool = true, notes: String? = nil) {
-        let craving = CravingRecord(
+        dataManager.addCravingRecord(
             intensity: intensity,
             duration: duration,
             trigger: trigger,
@@ -114,19 +116,8 @@ class TrackingViewModel: ObservableObject {
             notes: notes
         )
         
-        storageManager.addCravingRecord(craving, to: Date())
-    }
-    
-    private func updateStreakIfNeeded(stayedClean: Bool) {
-        guard let user = storageManager.currentUser else { return }
-        
-        if stayedClean {
-            // Increment streak
-            storageManager.updateUser(streakDays: user.streakDays + 1, totalCleanDays: user.totalCleanDays + 1)
-        } else {
-            // Reset streak
-            storageManager.updateUser(streakDays: 0)
-        }
+        // Update today's log
+        updateTodayLog()
     }
     
     // MARK: - Statistics
@@ -167,7 +158,7 @@ class TrackingViewModel: ObservableObject {
             logs = dailyLogs
         }
         
-        let allCravings = logs.flatMap { $0.cravings }
+        let allCravings = logs.flatMap { $0.cravings ?? [] }
         guard !allCravings.isEmpty else { return 0.0 }
         
         let totalIntensity = allCravings.reduce(0) { $0 + $1.intensity }
@@ -189,10 +180,10 @@ class TrackingViewModel: ObservableObject {
             logs = dailyLogs
         }
         
-        let allCravings = logs.flatMap { $0.cravings }
+        let allCravings = logs.flatMap { $0.cravings ?? [] }
         guard !allCravings.isEmpty else { return 0.0 }
         
-        let totalDuration = allCravings.reduce(0.0) { $0 + $1.duration }
+        let totalDuration = allCravings.reduce(0) { $0 + $1.duration }
         return totalDuration / Double(allCravings.count)
     }
     
@@ -211,19 +202,20 @@ class TrackingViewModel: ObservableObject {
             logs = dailyLogs
         }
         
-        let allCravings = logs.flatMap { $0.cravings }
+        let allCravings = logs.flatMap { $0.cravings ?? [] }
         
         var triggerCounts: [String: Int] = [:]
         
         for craving in allCravings {
-            let trigger = craving.trigger ?? "Unknown"
-            triggerCounts[trigger, default: 0] += 1
+            if let trigger = craving.trigger {
+                triggerCounts[trigger, default: 0] += 1
+            }
         }
         
         return triggerCounts
     }
     
-    func getCravingsByTime(for period: TimePeriod) -> [Int: Int] {
+    func getCravingsByLocation(for period: TimePeriod) -> [String: Int] {
         guard !dailyLogs.isEmpty else { return [:] }
         
         var logs: [DailyLog] = []
@@ -238,15 +230,49 @@ class TrackingViewModel: ObservableObject {
             logs = dailyLogs
         }
         
-        let allCravings = logs.flatMap { $0.cravings }
+        let allCravings = logs.flatMap { $0.cravings ?? [] }
         
-        var hourCounts: [Int: Int] = [:]
+        var locationCounts: [String: Int] = [:]
         
         for craving in allCravings {
-            let hour = Calendar.current.component(.hour, from: craving.timestamp)
-            hourCounts[hour, default: 0] += 1
+            if let location = craving.location {
+                locationCounts[location, default: 0] += 1
+            }
         }
         
-        return hourCounts
+        return locationCounts
+    }
+    
+    func getAverageWellbeingRatings(for period: TimePeriod) -> (mood: Double, energy: Double, sleep: Double, cravingIntensity: Double) {
+        guard !dailyLogs.isEmpty else { return (0, 0, 0, 0) }
+        
+        var logs: [DailyLog] = []
+        let today = Date()
+        
+        switch period {
+        case .week:
+            logs = dailyLogs.filter { $0.date >= today.startOfWeek && $0.date <= today }
+        case .month:
+            logs = dailyLogs.filter { $0.date >= today.startOfMonth && $0.date <= today }
+        case .lifetime:
+            logs = dailyLogs
+        }
+        
+        let logsWithRatings = logs.filter { $0.wellbeingRatings != nil }
+        guard !logsWithRatings.isEmpty else { return (0, 0, 0, 0) }
+        
+        let count = Double(logsWithRatings.count)
+        
+        let totalMood = logsWithRatings.reduce(0) { $0 + ($1.wellbeingRatings?.mood ?? 0) }
+        let totalEnergy = logsWithRatings.reduce(0) { $0 + ($1.wellbeingRatings?.energy ?? 0) }
+        let totalSleep = logsWithRatings.reduce(0) { $0 + ($1.wellbeingRatings?.sleep ?? 0) }
+        let totalCravingIntensity = logsWithRatings.reduce(0) { $0 + ($1.wellbeingRatings?.cravingIntensity ?? 0) }
+        
+        return (
+            mood: Double(totalMood) / count,
+            energy: Double(totalEnergy) / count,
+            sleep: Double(totalSleep) / count,
+            cravingIntensity: Double(totalCravingIntensity) / count
+        )
     }
 } 

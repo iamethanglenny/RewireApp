@@ -1,13 +1,20 @@
 import Foundation
+import SwiftData
 
-struct RecoveryMilestone: Codable, Identifiable {
-    var id: String
+// MARK: - RecoveryMilestone Model
+
+@Model
+final class RecoveryMilestone {
+    @Attribute(.unique) var id: String
     var addictionType: AddictionType
     var dayRange: String // e.g., "Days 1-3", "Days 4-7", etc.
     var title: String
     var description: String
     var startDay: Int
     var endDay: Int
+    
+    // Relationships
+    @Relationship(.cascade) var userProgress: [UserRecoveryProgress]?
     
     init(id: String = UUID().uuidString,
          addictionType: AddictionType,
@@ -26,26 +33,24 @@ struct RecoveryMilestone: Codable, Identifiable {
     }
 }
 
-struct UserRecoveryProgress: Codable, Identifiable {
-    var id: String
-    var userId: String
-    var addictionType: AddictionType
+// MARK: - UserRecoveryProgress Model
+
+@Model
+final class UserRecoveryProgress {
+    @Attribute(.unique) var id: String
     var quitDate: Date
     var currentDay: Int
-    var completedMilestones: [String] // milestone ids
+    
+    // Relationships
+    var user: User?
+    @Relationship(.cascade) var completedMilestones: [RecoveryMilestone]?
     
     init(id: String = UUID().uuidString,
-         userId: String,
-         addictionType: AddictionType,
          quitDate: Date,
-         currentDay: Int = 1,
-         completedMilestones: [String] = []) {
+         currentDay: Int = 1) {
         self.id = id
-        self.userId = userId
-        self.addictionType = addictionType
         self.quitDate = quitDate
         self.currentDay = currentDay
-        self.completedMilestones = completedMilestones
     }
     
     // Calculate current day based on quit date
@@ -56,8 +61,8 @@ struct UserRecoveryProgress: Codable, Identifiable {
     }
     
     // Check if a milestone is completed
-    func isMilestoneCompleted(milestoneId: String) -> Bool {
-        return completedMilestones.contains(milestoneId)
+    func isMilestoneCompleted(milestone: RecoveryMilestone) -> Bool {
+        return completedMilestones?.contains(milestone) ?? false
     }
     
     // Check if a milestone is in progress

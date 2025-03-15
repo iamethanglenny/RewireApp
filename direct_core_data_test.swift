@@ -2,7 +2,6 @@ import Foundation
 import CoreData
 
 // Simple wrapper for PersistenceController to use in tests
-// This avoids the need for complex imports
 struct TestPersistenceController {
     static let shared = TestPersistenceController()
     
@@ -35,7 +34,7 @@ struct TestPersistenceController {
         // Create DailyLog entity
         let dailyLogEntity = NSEntityDescription()
         dailyLogEntity.name = "DailyLog"
-        dailyLogEntity.managedObjectClassName = "DailyLog"
+        dailyLogEntity.managedObjectClassName = NSStringFromClass(DailyLog.self)
         
         // Create attributes for DailyLog
         let idAttribute = NSAttributeDescription()
@@ -81,8 +80,6 @@ public class DailyLog: NSManagedObject {
     @NSManaged public var stayedClean: Bool
     @NSManaged public var note: String?
     @NSManaged public var userId: String?
-    @NSManaged public var cravings: NSSet?
-    @NSManaged public var wellbeingRatings: WellbeingRatings?
     
     public override func awakeFromInsert() {
         super.awakeFromInsert()
@@ -94,17 +91,6 @@ public class DailyLog: NSManagedObject {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<DailyLog> {
         return NSFetchRequest<DailyLog>(entityName: "DailyLog")
     }
-}
-
-// Define a WellbeingRatings class for testing
-@objc(WellbeingRatings)
-public class WellbeingRatings: NSManagedObject {
-    @NSManaged public var id: String?
-    @NSManaged public var mood: Int16
-    @NSManaged public var energy: Int16
-    @NSManaged public var sleep: Int16
-    @NSManaged public var cravingIntensity: Int16
-    @NSManaged public var dailyLog: DailyLog?
 }
 
 // Extension to make DailyLog conform to NSFetchRequestResult
@@ -163,13 +149,11 @@ func testCreateAndSaveDailyLog() {
     }
 }
 
-// Main function to run all Core Data tests
-func runAllCoreDataTests() {
-    print("Running basic DailyLog access test...")
-    testDailyLogAccess()
-    
-    print("\nRunning create and save DailyLog test...")
-    testCreateAndSaveDailyLog()
-    
-    print("\nAll Core Data tests completed.")
-} 
+// Run the tests
+print("Running basic DailyLog access test...")
+testDailyLogAccess()
+
+print("\nRunning create and save DailyLog test...")
+testCreateAndSaveDailyLog()
+
+print("\nAll Core Data tests completed.") 

@@ -1,60 +1,61 @@
 import Foundation
+import SwiftData
 
-struct User: Codable, Identifiable {
-    var id: String
+// MARK: - User Model
+
+@Model
+final class User {
+    @Attribute(.unique) var id: String
     var name: String
     var email: String
-    var joinDate: Date
-    var streakDays: Int
-    var totalCleanDays: Int
-    var addiction: Addiction
-    var settings: UserSettings
+    var addiction: AddictionType
+    var quitDate: Date?
+    var costPerDay: Double?
+    var timeSpentPerDay: Double?
+    var createdAt: Date
+    var updatedAt: Date
+    
+    // Relationships
+    @Relationship(.cascade) var dailyLogs: [DailyLog]?
+    @Relationship(.cascade) var userChallenges: [UserChallenge]?
+    @Relationship(.cascade) var recoveryProgress: UserRecoveryProgress?
     
     init(id: String = UUID().uuidString,
          name: String,
          email: String,
-         joinDate: Date = Date(),
-         streakDays: Int = 0,
-         totalCleanDays: Int = 0,
-         addiction: Addiction,
-         settings: UserSettings = UserSettings()) {
+         addiction: AddictionType,
+         quitDate: Date? = nil,
+         costPerDay: Double? = nil,
+         timeSpentPerDay: Double? = nil,
+         createdAt: Date = Date(),
+         updatedAt: Date = Date()) {
         self.id = id
         self.name = name
         self.email = email
-        self.joinDate = joinDate
-        self.streakDays = streakDays
-        self.totalCleanDays = totalCleanDays
         self.addiction = addiction
-        self.settings = settings
-    }
-}
-
-struct Addiction: Codable {
-    var type: AddictionType
-    var quitDate: Date?
-    var costPerDay: Double?
-    var timeSpentPerDay: Double? // In minutes
-    
-    init(type: AddictionType, 
-         quitDate: Date? = nil, 
-         costPerDay: Double? = nil, 
-         timeSpentPerDay: Double? = nil) {
-        self.type = type
         self.quitDate = quitDate
         self.costPerDay = costPerDay
         self.timeSpentPerDay = timeSpentPerDay
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
     }
 }
 
-enum AddictionType: String, Codable, CaseIterable {
-    case smoking = "Smoking"
-    case alcohol = "Alcohol"
-    case gambling = "Gambling"
-    case socialMedia = "Social Media"
-    case pornography = "Pornography"
-    case gaming = "Gaming"
-    case other = "Other"
+// MARK: - Addiction Type Enum
+
+enum AddictionType: String, Codable {
+    case smoking = "smoking"
+    case alcohol = "alcohol"
+    case gambling = "gambling"
+    case socialMedia = "socialMedia"
+    case pornography = "pornography"
+    case gaming = "gaming"
+    case shopping = "shopping"
+    case other = "other"
 }
+
+// Make AddictionType conform to Hashable for SwiftData
+extension AddictionType: Hashable {}
 
 struct UserSettings: Codable {
     var notificationsEnabled: Bool

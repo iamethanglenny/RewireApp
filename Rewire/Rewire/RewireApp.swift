@@ -18,9 +18,6 @@ import SwiftData
 // 5. Make sure your main app target is selected
 // 6. Click "Add"
 
-// Also, make sure to add the CoreData directory to your project
-// And add the RewireModel.xcdatamodeld file to your project
-
 @main
 struct RewireApp: App {
     // Use the AppState from the Storage directory

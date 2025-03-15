@@ -30,6 +30,10 @@
 		88BEEEDE2D852EDC00FFA84E /* CoreDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BEEEDC2D852EDC00FFA84E /* CoreDataTest.swift */; };
 		88BEEEE42D85338300FFA84E /* TimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BEEEE22D85338300FFA84E /* TimePeriod.swift */; };
 		88BEEEE52D85338300FFA84E /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 88BEEEE12D85338300FFA84E /* README.md */; };
+		88BEEEE82D85F3CD00FFA84E /* CoreData in Resources */ = {isa = PBXBuildFile; fileRef = 88BEEEE62D85F3CD00FFA84E /* CoreData */; };
+		88BEEEE92D85F3CD00FFA84E /* SwiftDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BEEEE72D85F3CD00FFA84E /* SwiftDataManager.swift */; };
+		88BEEEEC2D85F3E900FFA84E /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 88BEEEEB2D85F3E900FFA84E /* README.md */; };
+		88BEEEED2D85F3E900FFA84E /* CoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BEEEEA2D85F3E900FFA84E /* CoreDataTests.swift */; };
 		88E4AB382D828B87006239F6 /* SupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB362D828B87006239F6 /* SupportView.swift */; };
 		88E4AB392D828B87006239F6 /* TrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB372D828B87006239F6 /* TrackingView.swift */; };
 		88E4AB3A2D828B87006239F6 /* ChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E4AB352D828B87006239F6 /* ChallengeView.swift */; };
@@ -93,6 +97,10 @@
 		88BEEEDC2D852EDC00FFA84E /* CoreDataTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTest.swift; sourceTree = "<group>"; };
 		88BEEEE12D85338300FFA84E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		88BEEEE22D85338300FFA84E /* TimePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePeriod.swift; sourceTree = "<group>"; };
+		88BEEEE62D85F3CD00FFA84E /* CoreData */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CoreData; sourceTree = "<group>"; };
+		88BEEEE72D85F3CD00FFA84E /* SwiftDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataManager.swift; sourceTree = "<group>"; };
+		88BEEEEA2D85F3E900FFA84E /* CoreDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTests.swift; sourceTree = "<group>"; };
+		88BEEEEB2D85F3E900FFA84E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		88E4AB352D828B87006239F6 /* ChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeView.swift; sourceTree = "<group>"; };
 		88E4AB362D828B87006239F6 /* SupportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportView.swift; sourceTree = "<group>"; };
 		88E4AB372D828B87006239F6 /* TrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingView.swift; sourceTree = "<group>"; };
@@ -243,6 +251,8 @@
 		88BEEECF2D852EC400FFA84E /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				88BEEEE62D85F3CD00FFA84E /* CoreData */,
+				88BEEEE72D85F3CD00FFA84E /* SwiftDataManager.swift */,
 				88BEEEC22D852EC400FFA84E /* Extensions */,
 				88BEEEC72D852EC400FFA84E /* Models */,
 				88BEEECB2D852EC400FFA84E /* ViewModels */,
@@ -257,6 +267,8 @@
 		88BEEEDD2D852EDC00FFA84E /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				88BEEEEA2D85F3E900FFA84E /* CoreDataTests.swift */,
+				88BEEEEB2D85F3E900FFA84E /* README.md */,
 				88BEEEDC2D852EDC00FFA84E /* CoreDataTest.swift */,
 			);
 			path = Tests;
@@ -391,7 +403,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88BEEEEC2D85F3E900FFA84E /* README.md in Resources */,
 				88BEEEDB2D852EC400FFA84E /* README.md in Resources */,
+				88BEEEE82D85F3CD00FFA84E /* CoreData in Resources */,
 				88BEEEE52D85338300FFA84E /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -427,6 +441,7 @@
 				88E4AB382D828B87006239F6 /* SupportView.swift in Sources */,
 				88E4AB5E2D83CA46006239F6 /* DailyLogOverviewView.swift in Sources */,
 				88E4AB392D828B87006239F6 /* TrackingView.swift in Sources */,
+				88BEEEE92D85F3CD00FFA84E /* SwiftDataManager.swift in Sources */,
 				88E4AB442D836124006239F6 /* RecoveryTimelineView.swift in Sources */,
 				88E4AB3A2D828B87006239F6 /* ChallengeView.swift in Sources */,
 				88307E282D81D30B00E35A35 /* ContentView.swift in Sources */,
@@ -443,6 +458,7 @@
 				88BEEED32D852EC400FFA84E /* UserViewModel.swift in Sources */,
 				88BEEED52D852EC400FFA84E /* Challenge.swift in Sources */,
 				88BEEED62D852EC400FFA84E /* TrackingViewModel.swift in Sources */,
+				88BEEEED2D85F3E900FFA84E /* CoreDataTests.swift in Sources */,
 				88BEEED72D852EC400FFA84E /* ChallengeViewModel.swift in Sources */,
 				88BEEED82D852EC400FFA84E /* DailyLog.swift in Sources */,
 				88BEEED92D852EC400FFA84E /* Date+Extensions.swift in Sources */,

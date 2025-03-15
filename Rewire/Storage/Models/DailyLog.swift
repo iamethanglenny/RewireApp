@@ -11,8 +11,8 @@ final class DailyLog {
     var note: String?
     
     // Relationships
-    @Relationship(.cascade) var wellbeingRatings: WellbeingRatings?
-    @Relationship(.cascade) var cravings: [CravingRecord]?
+    @Relationship(deleteRule: .cascade) var wellbeingRatings: WellbeingRatings?
+    @Relationship(deleteRule: .cascade) var cravings: [CravingRecord]?
     var user: User?
     
     init(id: String = UUID().uuidString,

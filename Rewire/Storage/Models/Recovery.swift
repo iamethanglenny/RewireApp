@@ -14,7 +14,7 @@ final class RecoveryMilestone {
     var endDay: Int
     
     // Relationships
-    @Relationship(.cascade) var userProgress: [UserRecoveryProgress]?
+    @Relationship(deleteRule: .cascade) var userProgress: [UserRecoveryProgress]?
     
     init(id: String = UUID().uuidString,
          addictionType: AddictionType,
@@ -43,7 +43,7 @@ final class UserRecoveryProgress {
     
     // Relationships
     var user: User?
-    @Relationship(.cascade) var completedMilestones: [RecoveryMilestone]?
+    @Relationship(deleteRule: .cascade) var completedMilestones: [RecoveryMilestone]?
     
     init(id: String = UUID().uuidString,
          quitDate: Date,
@@ -69,4 +69,4 @@ final class UserRecoveryProgress {
     func isMilestoneInProgress(milestone: RecoveryMilestone) -> Bool {
         return currentDay >= milestone.startDay && currentDay <= milestone.endDay
     }
-} 
+}

@@ -16,9 +16,9 @@ final class User {
     var updatedAt: Date
     
     // Relationships
-    @Relationship(.cascade) var dailyLogs: [DailyLog]?
-    @Relationship(.cascade) var userChallenges: [UserChallenge]?
-    @Relationship(.cascade) var recoveryProgress: UserRecoveryProgress?
+    @Relationship(deleteRule: .cascade) var dailyLogs: [DailyLog]?
+    @Relationship(deleteRule: .cascade) var userChallenges: [UserChallenge]?
+    @Relationship(deleteRule: .cascade) var recoveryProgress: UserRecoveryProgress?
     
     init(id: String = UUID().uuidString,
          name: String,
@@ -72,4 +72,4 @@ struct UserSettings: Codable {
         self.darkModeEnabled = darkModeEnabled
         self.privacyMode = privacyMode
     }
-} 
+}

@@ -10,7 +10,7 @@ struct ChallengeView: View {
         Challenge(
             id: "1", 
             title: "7-Day Meditation", 
-            description: "Meditate for at least 10 minutes every day for a week", 
+            challengeDescription: "Meditate for at least 10 minutes every day for a week", 
             difficulty: "Easy", 
             daysToComplete: 7, 
             progress: 0.3
@@ -18,7 +18,7 @@ struct ChallengeView: View {
         Challenge(
             id: "2", 
             title: "Journal Daily", 
-            description: "Write in your journal every day for 14 days", 
+            challengeDescription: "Write in your journal every day for 14 days", 
             difficulty: "Medium", 
             daysToComplete: 14, 
             progress: 0.5
@@ -26,7 +26,7 @@ struct ChallengeView: View {
         Challenge(
             id: "3", 
             title: "30-Day Clean Streak", 
-            description: "Maintain a clean streak for 30 days", 
+            challengeDescription: "Maintain a clean streak for 30 days", 
             difficulty: "Hard", 
             daysToComplete: 30, 
             progress: 0.2
@@ -34,7 +34,7 @@ struct ChallengeView: View {
         Challenge(
             id: "4", 
             title: "Exercise Routine", 
-            description: "Exercise for at least 20 minutes 3 times a week", 
+            challengeDescription: "Exercise for at least 20 minutes 3 times a week", 
             difficulty: "Medium", 
             daysToComplete: 21, 
             progress: 0.7
@@ -42,7 +42,7 @@ struct ChallengeView: View {
         Challenge(
             id: "5", 
             title: "Mindfulness Practice", 
-            description: "Practice mindfulness techniques daily for 10 days", 
+            challengeDescription: "Practice mindfulness techniques daily for 10 days", 
             difficulty: "Easy", 
             daysToComplete: 10, 
             progress: 0.0
@@ -140,7 +140,7 @@ struct ChallengeCard: View {
                         .cornerRadius(10)
                 }
                 
-                Text(challenge.description)
+                Text(challenge.challengeDescription)
                     .font(.subheadline)
                     .foregroundColor(.gray)
                 
@@ -240,7 +240,7 @@ struct ChallengeDetailView: View {
                     Text("Description")
                         .font(.headline)
                     
-                    Text(challenge.description)
+                    Text(challenge.challengeDescription)
                         .font(.body)
                     
                     Text("This challenge helps you build consistency and discipline in your recovery journey. Completing it will strengthen your resolve and provide a sense of accomplishment.")

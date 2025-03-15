@@ -248,10 +248,10 @@ class SwiftDataManager: ObservableObject {
     
     // MARK: - Challenge Management
     
-    func createChallenge(title: String, description: String, difficulty: String, daysToComplete: Int, tasks: [ChallengeTask] = []) -> Challenge {
+    func createChallenge(title: String, challengeDescription: String, difficulty: String, daysToComplete: Int, tasks: [ChallengeTask] = []) -> Challenge {
         let challenge = Challenge(
             title: title,
-            description: description,
+            challengeDescription: challengeDescription,
             difficulty: difficulty,
             daysToComplete: daysToComplete
         )
@@ -447,42 +447,42 @@ class SwiftDataManager: ObservableObject {
         // Create some default challenges
         let challenges = [
             (
-                title: "Mindfulness Week",
-                description: "Practice mindfulness techniques daily to help manage cravings and stress.",
+                title: "Mindfulness Challenge",
+                challengeDescription: "Practice mindfulness techniques daily to help manage cravings and stress.",
                 difficulty: "Easy",
-                days: 7,
+                daysToComplete: 10,
                 tasks: [
-                    ChallengeTask(title: "5-Minute Meditation", description: "Spend 5 minutes in quiet meditation."),
-                    ChallengeTask(title: "Mindful Walking", description: "Take a 10-minute walk focusing on your surroundings."),
-                    ChallengeTask(title: "Deep Breathing", description: "Practice deep breathing exercises for 5 minutes."),
-                    ChallengeTask(title: "Body Scan", description: "Perform a full body scan meditation."),
-                    ChallengeTask(title: "Mindful Eating", description: "Eat a meal with full attention to the experience.")
+                    ChallengeTask(title: "5-Minute Meditation", taskDescription: "Spend 5 minutes in quiet meditation."),
+                    ChallengeTask(title: "Mindful Walking", taskDescription: "Take a 10-minute walk focusing on your surroundings."),
+                    ChallengeTask(title: "Deep Breathing", taskDescription: "Practice deep breathing exercises for 5 minutes."),
+                    ChallengeTask(title: "Body Scan", taskDescription: "Perform a full body scan meditation."),
+                    ChallengeTask(title: "Mindful Eating", taskDescription: "Eat a meal with full attention to the experience.")
                 ]
             ),
             (
                 title: "Healthy Habits",
-                description: "Establish healthy habits to replace addiction behaviors.",
+                challengeDescription: "Establish healthy habits to replace addiction behaviors.",
                 difficulty: "Medium",
-                days: 14,
+                daysToComplete: 14,
                 tasks: [
-                    ChallengeTask(title: "Morning Exercise", description: "Start your day with 15 minutes of exercise."),
-                    ChallengeTask(title: "Hydration", description: "Drink at least 8 glasses of water daily."),
-                    ChallengeTask(title: "Sleep Routine", description: "Establish a consistent sleep schedule."),
-                    ChallengeTask(title: "Healthy Meal", description: "Prepare a nutritious meal instead of eating out."),
-                    ChallengeTask(title: "Digital Detox", description: "Spend 2 hours without digital devices.")
+                    ChallengeTask(title: "Morning Exercise", taskDescription: "Start your day with 15 minutes of exercise."),
+                    ChallengeTask(title: "Hydration", taskDescription: "Drink at least 8 glasses of water daily."),
+                    ChallengeTask(title: "Sleep Routine", taskDescription: "Establish a consistent sleep schedule."),
+                    ChallengeTask(title: "Healthy Meal", taskDescription: "Prepare a nutritious meal instead of eating out."),
+                    ChallengeTask(title: "Digital Detox", taskDescription: "Spend 2 hours without digital devices.")
                 ]
             ),
             (
                 title: "Connection Challenge",
-                description: "Rebuild and strengthen social connections.",
+                challengeDescription: "Rebuild and strengthen social connections.",
                 difficulty: "Hard",
-                days: 21,
+                daysToComplete: 21,
                 tasks: [
-                    ChallengeTask(title: "Reach Out", description: "Contact a friend or family member you haven't spoken to in a while."),
-                    ChallengeTask(title: "Join a Group", description: "Attend a community event or support group."),
-                    ChallengeTask(title: "Volunteer", description: "Spend time volunteering for a cause you care about."),
-                    ChallengeTask(title: "Share Your Journey", description: "Open up to someone about your recovery journey."),
-                    ChallengeTask(title: "Plan a Social Activity", description: "Organize a social gathering that doesn't involve your addiction.")
+                    ChallengeTask(title: "Reach Out", taskDescription: "Contact a friend or family member you haven't spoken to in a while."),
+                    ChallengeTask(title: "Join a Group", taskDescription: "Attend a community event or support group."),
+                    ChallengeTask(title: "Volunteer", taskDescription: "Spend time volunteering for a cause you care about."),
+                    ChallengeTask(title: "Share Your Journey", taskDescription: "Open up to someone about your recovery journey."),
+                    ChallengeTask(title: "Plan a Social Activity", taskDescription: "Organize a social gathering that doesn't involve your addiction.")
                 ]
             )
         ]
@@ -491,9 +491,9 @@ class SwiftDataManager: ObservableObject {
         for challenge in challenges {
             let newChallenge = Challenge(
                 title: challenge.title,
-                description: challenge.description,
+                challengeDescription: challenge.challengeDescription,
                 difficulty: challenge.difficulty,
-                daysToComplete: challenge.days
+                daysToComplete: challenge.daysToComplete
             )
             
             modelContext.insert(newChallenge)
@@ -503,7 +503,7 @@ class SwiftDataManager: ObservableObject {
             for task in challenge.tasks {
                 let newTask = ChallengeTask(
                     title: task.title,
-                    description: task.description
+                    taskDescription: task.taskDescription
                 )
                 newTask.challenge = newChallenge
                 modelContext.insert(newTask)

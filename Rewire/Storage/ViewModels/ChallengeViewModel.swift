@@ -105,14 +105,14 @@ class ChallengeViewModel: ObservableObject {
     
     // MARK: - Challenge Creation (Admin)
     
-    func createChallenge(title: String, description: String, difficulty: String, daysToComplete: Int, tasks: [(title: String, description: String)]) {
+    func createChallenge(title: String, challengeDescription: String, difficulty: String, daysToComplete: Int, tasks: [(title: String, description: String)]) {
         // Create challenge tasks
         var challengeTasks: [ChallengeTask] = []
         
         for task in tasks {
             let newTask = ChallengeTask(
                 title: task.title,
-                description: task.description
+                taskDescription: task.description
             )
             challengeTasks.append(newTask)
         }
@@ -120,7 +120,7 @@ class ChallengeViewModel: ObservableObject {
         // Create and save the challenge
         _ = dataManager.createChallenge(
             title: title,
-            description: description,
+            challengeDescription: challengeDescription,
             difficulty: difficulty,
             daysToComplete: daysToComplete,
             tasks: challengeTasks

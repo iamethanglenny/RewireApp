@@ -1,59 +1,51 @@
 import SwiftUI
-// Import the Storage module to access the Challenge model
-import Rewire
-
 // You can also add this line to be explicit about using SwiftUI's ProgressView
 typealias ProgressViewType = SwiftUI.ProgressView<EmptyView, EmptyView>
 
 struct ChallengeView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State private var selectedChallenge: Rewire.Challenge? = nil
+    @State private var selectedChallenge: Challenge? = nil
     
     let challenges = [
-        Rewire.Challenge(
+        Challenge(
             id: "1", 
             title: "7-Day Meditation", 
             description: "Meditate for at least 10 minutes every day for a week", 
             difficulty: "Easy", 
             daysToComplete: 7, 
-            progress: 0.3,
-            tasks: []
+            progress: 0.3
         ),
-        Rewire.Challenge(
+        Challenge(
             id: "2", 
             title: "Journal Daily", 
             description: "Write in your journal every day for 14 days", 
             difficulty: "Medium", 
             daysToComplete: 14, 
-            progress: 0.5,
-            tasks: []
+            progress: 0.5
         ),
-        Rewire.Challenge(
+        Challenge(
             id: "3", 
             title: "30-Day Clean Streak", 
             description: "Maintain a clean streak for 30 days", 
             difficulty: "Hard", 
             daysToComplete: 30, 
-            progress: 0.2,
-            tasks: []
+            progress: 0.2
         ),
-        Rewire.Challenge(
+        Challenge(
             id: "4", 
             title: "Exercise Routine", 
             description: "Exercise for at least 20 minutes 3 times a week", 
             difficulty: "Medium", 
             daysToComplete: 21, 
-            progress: 0.7,
-            tasks: []
+            progress: 0.7
         ),
-        Rewire.Challenge(
+        Challenge(
             id: "5", 
             title: "Mindfulness Practice", 
             description: "Practice mindfulness techniques daily for 10 days", 
             difficulty: "Easy", 
             daysToComplete: 10, 
-            progress: 0.0,
-            tasks: []
+            progress: 0.0
         )
     ]
     
@@ -125,7 +117,7 @@ struct ChallengeView: View {
 }
 
 struct ChallengeCard: View {
-    let challenge: Rewire.Challenge
+    let challenge: Challenge
     
     var body: some View {
         ZStack {
@@ -191,7 +183,7 @@ struct ChallengeCard: View {
 }
 
 struct ChallengeDetailView: View {
-    let challenge: Rewire.Challenge
+    let challenge: Challenge
     let onBack: () -> Void
     
     var body: some View {

@@ -1,9 +1,12 @@
 import SwiftUI
-// Import the shared TimePeriod enum
-// Note: After adding the Shared directory to your Xcode project, you may need to adjust this import
+import Foundation
+
+// Use a typealias to disambiguate between the two TimePeriod enums
+// This refers to the TimePeriod enum in Shared/TimePeriod.swift
+typealias GraphTimePeriod = TimePeriod
 
 struct RewiringGraphCard: View {
-    @Binding var selectedPeriod: TimePeriod
+    @Binding var selectedPeriod: GraphTimePeriod
     let dataPoints: [CGFloat]
     let averageTime: String
     let subtitle: String
@@ -15,7 +18,7 @@ struct RewiringGraphCard: View {
         VStack(alignment: .leading, spacing: 1) {
             // Time period selector - left aligned
             HStack(spacing: 10) {
-                ForEach(TimePeriod.allCases, id: \.self) { period in
+                ForEach(GraphTimePeriod.allCases, id: \.self) { period in
                     PeriodSelectorButton(period: period, selectedPeriod: $selectedPeriod)
                 }
             }
@@ -75,8 +78,8 @@ struct RewiringGraphCard: View {
 
 // Period selector button component
 struct PeriodSelectorButton: View {
-    let period: TimePeriod
-    @Binding var selectedPeriod: TimePeriod
+    let period: GraphTimePeriod
+    @Binding var selectedPeriod: GraphTimePeriod
     
     var body: some View {
         Text(period.rawValue)
@@ -107,7 +110,7 @@ struct RewiringGraphCard_Previews: PreviewProvider {
             Color.black.edgesIgnoringSafeArea(.all)
             
             RewiringGraphCard(
-                selectedPeriod: .constant(.week),
+                selectedPeriod: .constant(TimePeriod.week),
                 dataPoints: [20, 40, 30, 60, 25, 45, 35],
                 averageTime: "2hrs, 22 mins",
                 subtitle: "Avg Craving Intervals",

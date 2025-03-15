@@ -2,12 +2,6 @@ import Foundation
 import Combine
 import SwiftData
 
-enum TimePeriod {
-    case week
-    case month
-    case lifetime
-}
-
 class TrackingViewModel: ObservableObject {
     // Published properties for reactive UI updates
     @Published var dailyLogs: [DailyLog] = []

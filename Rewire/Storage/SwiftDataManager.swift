@@ -2,6 +2,7 @@ import Foundation
 import SwiftData
 import Combine
 
+@MainActor
 class SwiftDataManager: ObservableObject {
     // Singleton instance
     static let shared = SwiftDataManager()
@@ -522,115 +523,223 @@ class SwiftDataManager: ObservableObject {
     func migrateFromFileStorage(storageManager: StorageManager) {
         // Migrate user
         if let user = storageManager.currentUser {
-            let newUser = createUser(
+            // Create new user with basic properties
+            let newUser = User(
                 name: user.name,
                 email: user.email,
-                addiction: user.addiction.type,
-                quitDate: user.addiction.quitDate,
-                costPerDay: user.addiction.costPerDay,
-                timeSpentPerDay: user.addiction.timeSpentPerDay
+                addiction: AddictionType.other // Default value, will be updated if possible
             )
             
-            // Migrate daily logs
-            for log in storageManager.dailyLogs.filter({ $0.userId == user.id }) {
+            // Try to set addiction type if available
+            if let addictionString = (user.value(forKey: "addiction") as? String) ?? (user.value(forKey: "addictionType") as? String) {
+                if let addiction = AddictionType(rawValue: addictionString) {
+                    newUser.addiction = addiction
+                }
+            }
+            
+            // Try to set other properties if available
+            if let quitDate = user.value(forKey: "quitDate") as? Date {
+                newUser.quitDate = quitDate
+            }
+            
+            if let costPerDay = user.value(forKey: "costPerDay") as? Double {
+                newUser.costPerDay = costPerDay
+            }
+            
+            if let timeSpentPerDay = user.value(forKey: "timeSpentPerDay") as? Double {
+                newUser.timeSpentPerDay = timeSpentPerDay
+            }
+            
+            // Insert the user
+            modelContext.insert(newUser)
+            currentUser = newUser
+            
+            // MARK: Migrate Daily Logs
+            
+            // Get all logs (we'll filter them later)
+            let allLogs = storageManager.dailyLogs
+            
+            for log in allLogs {
+                // Try to get the user ID from the log
+                let logUserId = (log.value(forKey: "userId") as? String) ?? ""
+                
+                // Skip logs that don't belong to this user
+                if !logUserId.isEmpty && logUserId != user.id {
+                    continue
+                }
+                
+                // Create new log with basic properties
                 let newLog = DailyLog(
                     id: log.id,
                     date: log.date,
-                    stayedClean: log.stayedClean,
-                    note: log.note
+                    stayedClean: (log.value(forKey: "stayedClean") as? Bool) ?? true
                 )
                 
-                // Set relationships
+                // Try to set note if available
+                if let note = log.value(forKey: "note") as? String {
+                    newLog.note = note
+                }
+                
+                // Set relationship to user
                 newLog.user = newUser
                 
-                // Create wellbeing ratings
-                let ratings = WellbeingRatings(
-                    id: UUID().uuidString,
-                    mood: log.wellbeingRatings.mood,
-                    energy: log.wellbeingRatings.energy,
-                    sleep: log.wellbeingRatings.sleep,
-                    cravingIntensity: log.wellbeingRatings.cravingIntensity
-                )
-                
-                ratings.dailyLog = newLog
-                newLog.wellbeingRatings = ratings
-                
-                // Create cravings
-                var cravingRecords: [CravingRecord] = []
-                for craving in log.cravings {
-                    let newCraving = CravingRecord(
-                        id: craving.id,
-                        timestamp: craving.timestamp,
-                        intensity: craving.intensity,
-                        duration: craving.duration,
-                        trigger: craving.trigger,
-                        location: craving.location,
-                        overcame: craving.overcame,
-                        notes: craving.notes
+                // Try to create wellbeing ratings if available
+                if let wellbeingRatings = log.value(forKey: "wellbeingRatings") {
+                    let ratings = WellbeingRatings(
+                        id: UUID().uuidString,
+                        mood: (wellbeingRatings.value(forKey: "mood") as? Int) ?? 3,
+                        energy: (wellbeingRatings.value(forKey: "energy") as? Int) ?? 3,
+                        sleep: (wellbeingRatings.value(forKey: "sleep") as? Int) ?? 3,
+                        cravingIntensity: (wellbeingRatings.value(forKey: "cravingIntensity") as? Int) ?? 3
                     )
                     
-                    newCraving.dailyLog = newLog
-                    cravingRecords.append(newCraving)
-                    modelContext.insert(newCraving)
+                    ratings.dailyLog = newLog
+                    newLog.wellbeingRatings = ratings
+                    modelContext.insert(ratings)
+                }
+                
+                // Try to create cravings if available
+                var cravingRecords: [CravingRecord] = []
+                if let cravings = log.value(forKey: "cravings") as? [Any] {
+                    for cravingObj in cravings {
+                        // Extract properties safely
+                        let id = (cravingObj.value(forKey: "id") as? String) ?? UUID().uuidString
+                        let timestamp = (cravingObj.value(forKey: "timestamp") as? Date) ?? Date()
+                        let intensity = (cravingObj.value(forKey: "intensity") as? Int) ?? 3
+                        let duration = (cravingObj.value(forKey: "duration") as? TimeInterval) ?? 0
+                        let trigger = cravingObj.value(forKey: "trigger") as? String
+                        let location = cravingObj.value(forKey: "location") as? String
+                        let overcame = (cravingObj.value(forKey: "overcame") as? Bool) ?? true
+                        let notes = cravingObj.value(forKey: "notes") as? String
+                        
+                        let newCraving = CravingRecord(
+                            id: id,
+                            timestamp: timestamp,
+                            intensity: intensity,
+                            duration: duration,
+                            trigger: trigger,
+                            location: location,
+                            overcame: overcame,
+                            notes: notes
+                        )
+                        
+                        newCraving.dailyLog = newLog
+                        cravingRecords.append(newCraving)
+                        modelContext.insert(newCraving)
+                    }
                 }
                 
                 newLog.cravings = cravingRecords
                 
                 modelContext.insert(newLog)
-                modelContext.insert(ratings)
                 
                 // Update user relationship
                 newUser.dailyLogs = (newUser.dailyLogs ?? []) + [newLog]
             }
             
-            // Migrate user recovery progress
-            if let progress = storageManager.userRecoveryProgress, progress.userId == user.id {
-                let newProgress = UserRecoveryProgress(
-                    id: progress.id,
-                    quitDate: progress.quitDate,
-                    currentDay: progress.currentDay
-                )
+            // MARK: Migrate Recovery Progress
+            
+            if let progress = storageManager.userRecoveryProgress {
+                // Try to get the user ID from the progress
+                let progressUserId = (progress.value(forKey: "userId") as? String) ?? ""
                 
-                // Set relationships
-                newProgress.user = newUser
-                
-                // Add completed milestones
-                var completedMilestones: [RecoveryMilestone] = []
-                for milestoneId in progress.completedMilestones {
-                    if let milestone = recoveryMilestones.first(where: { $0.id == milestoneId }) {
-                        completedMilestones.append(milestone)
+                // Skip if the progress doesn't belong to this user
+                if !progressUserId.isEmpty && progressUserId != user.id {
+                    // Skip this progress
+                } else {
+                    // Create new progress with basic properties
+                    let newProgress = UserRecoveryProgress(
+                        id: (progress.value(forKey: "id") as? String) ?? UUID().uuidString,
+                        quitDate: (progress.value(forKey: "quitDate") as? Date) ?? Date(),
+                        currentDay: (progress.value(forKey: "currentDay") as? Int) ?? 1
+                    )
+                    
+                    // Set relationship to user
+                    newProgress.user = newUser
+                    
+                    // Try to get completed milestone IDs
+                    var completedMilestones: [RecoveryMilestone] = []
+                    var milestoneIds: [String] = []
+                    
+                    if let ids = progress.value(forKey: "completedMilestoneIds") as? [String] {
+                        milestoneIds = ids
+                    } else if let ids = progress.value(forKey: "completedMilestones") as? [String] {
+                        milestoneIds = ids
                     }
+                    
+                    // Find matching milestones
+                    for milestoneId in milestoneIds {
+                        if let milestone = recoveryMilestones.first(where: { $0.id == milestoneId }) {
+                            completedMilestones.append(milestone)
+                        }
+                    }
+                    
+                    newProgress.completedMilestones = completedMilestones
+                    
+                    modelContext.insert(newProgress)
+                    
+                    // Update user relationship
+                    newUser.recoveryProgress = newProgress
                 }
-                
-                newProgress.completedMilestones = completedMilestones
-                
-                modelContext.insert(newProgress)
-                
-                // Update user relationship
-                newUser.recoveryProgress = newProgress
             }
             
-            // Migrate user challenges
-            for userChallenge in storageManager.userChallenges.filter({ $0.userId == user.id }) {
-                if let challenge = challenges.first(where: { $0.id == userChallenge.challengeId }) {
+            // MARK: Migrate User Challenges
+            
+            // Get all user challenges
+            let allUserChallenges = storageManager.userChallenges
+            
+            for userChallenge in allUserChallenges {
+                // Try to get the user ID from the challenge
+                let challengeUserId = (userChallenge.value(forKey: "userId") as? String) ?? ""
+                
+                // Skip challenges that don't belong to this user
+                if !challengeUserId.isEmpty && challengeUserId != user.id {
+                    continue
+                }
+                
+                // Try to get the challenge ID
+                var challengeId: String? = nil
+                
+                if let id = userChallenge.value(forKey: "challengeId") as? String {
+                    challengeId = id
+                } else if let challenge = userChallenge.value(forKey: "challenge"),
+                          let id = challenge.value(forKey: "id") as? String {
+                    challengeId = id
+                }
+                
+                // Find the matching challenge
+                if let challengeId = challengeId,
+                   let challenge = challenges.first(where: { $0.id == challengeId }) {
+                    // Create new user challenge with basic properties
                     let newUserChallenge = UserChallenge(
-                        id: userChallenge.id,
-                        startDate: userChallenge.startDate,
-                        endDate: userChallenge.endDate,
-                        isActive: userChallenge.isActive,
-                        isCompleted: userChallenge.isCompleted,
-                        progress: userChallenge.progress
+                        id: (userChallenge.value(forKey: "id") as? String) ?? UUID().uuidString,
+                        startDate: (userChallenge.value(forKey: "startDate") as? Date) ?? Date(),
+                        endDate: userChallenge.value(forKey: "endDate") as? Date,
+                        isActive: (userChallenge.value(forKey: "isActive") as? Bool) ?? true,
+                        isCompleted: (userChallenge.value(forKey: "isCompleted") as? Bool) ?? false,
+                        progress: (userChallenge.value(forKey: "progress") as? Double) ?? 0.0
                     )
                     
                     // Set relationships
                     newUserChallenge.user = newUser
                     newUserChallenge.challenge = challenge
                     
-                    // Add completed tasks
+                    // Try to get completed tasks
                     var completedTasks: [ChallengeTask] = []
-                    for (taskId, completed) in userChallenge.taskProgress where completed {
-                        if let task = challenge.tasks?.first(where: { $0.id == taskId }) {
-                            completedTasks.append(task)
+                    
+                    // Try different approaches to get completed tasks
+                    if let taskProgress = userChallenge.value(forKey: "taskProgress") as? [String: Bool] {
+                        for (taskId, completed) in taskProgress where completed {
+                            if let task = challenge.tasks?.first(where: { $0.id == taskId }) {
+                                completedTasks.append(task)
+                            }
+                        }
+                    } else if let completedTasksArray = userChallenge.value(forKey: "completedTasks") as? [Any] {
+                        for taskObj in completedTasksArray {
+                            if let taskId = taskObj.value(forKey: "id") as? String,
+                               let task = challenge.tasks?.first(where: { $0.id == taskId }) {
+                                completedTasks.append(task)
+                            }
                         }
                     }
                     
@@ -643,9 +752,10 @@ class SwiftDataManager: ObservableObject {
                     challenge.userChallenges = (challenge.userChallenges ?? []) + [newUserChallenge]
                 }
             }
+            
+            // Save all changes
+            saveContext()
         }
-        
-        saveContext()
     }
     
     // MARK: - Helper Methods
